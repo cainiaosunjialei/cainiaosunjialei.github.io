@@ -1,0 +1,34 @@
+table {
+    width: 100%;
+}
+
+table thead tr {
+    background-color: #e8edf3 !important;
+}
+
+table thead tr th {
+    text-align: left;
+}
+
+.markdown-body .highlight {
+    overflow: auto;
+}
+
+.markdown-body {
+    font-family: "PingFang SC", "Helvetica Neue", Arial, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+}
+
+.article-list .article-item .post-preview .post-title {
+    font-family: "PingFang SC", "Helvetica Neue", Arial, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+}
+
+.article-list .article-item .post-preview .post-excerpt {
+    font-family: -apple-system, Verdana, "PingFang SC", "Helvetica Neue", Arial, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+}
+
+.post-forward-message{
+    font-size: 12px;
+    margin: 0 auto;
+    padding-bottom: 10px;
+    color: #aaa;
+}
