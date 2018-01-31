@@ -1,6 +1,18 @@
 [
   
     {
+      "title"    : "对于PHP引用的理解,以及在实际项目中的使用",
+      "tags"     : "php",
+      "url"      : "/2018/01/31/php&.html"
+    } ,
+  
+    {
+      "title"    : "Linux下配置Nginx",
+      "tags"     : "nginx linux",
+      "url"      : "/2018/01/29/nginx-conf.html"
+    } ,
+  
+    {
       "title"    : "PHP数组函数array_chunk的使用",
       "tags"     : "php",
       "url"      : "/2018/01/28/php-array_chunk.html"

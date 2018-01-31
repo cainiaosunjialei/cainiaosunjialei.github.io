@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>对于PHP引用的理解,以及在实际项目中的使用 - 孙佳磊的博客</title>
+    <meta name="author"  content="孙佳磊">
+    <meta name="description" content="对于PHP引用的理解,以及在实际项目中的使用">
+    <meta name="keywords"  content="php">
+    <!-- Open Graph -->
+    <meta property="og:title" content="对于PHP引用的理解,以及在实际项目中的使用 - 孙佳磊的博客">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="http://localhost:4000/2018/01/31/php&.html">
+    <meta property="og:description" content="一位PHP开发对技术的一点分享。">
+    <meta property="og:site_name" content="孙佳磊的博客">
+    <link rel="stylesheet" href="//cdn.staticfile.org/normalize/6.0.0/normalize.min.css">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_roc50gemkxpw4s4i.css">
+    <link rel="stylesheet" href="/assets/css/github-markdown.css">
+    <link rel="stylesheet" href="/assets/css/prism.css">
+    <link rel="stylesheet" href="/assets/css/share.min.css">
+    <link rel="stylesheet" href="/assets/css/app.min.css">
+    <link rel="stylesheet" href="/assets/css/common.css">
+</head>
+<body>
+    <!--[if lt IE 10]>
+<div class="alert-danger" role="alert">你的浏览器实在太太太旧了，放学别走，升级完浏览器再说！<a target="_blank" class="alert-link" href="http://browsehappy.com">立即升级</a></div>
+<![endif]-->
+<input id="nm-switch" type="hidden" value="false">
+
+<header class="g-header">
+    <div class="g-logo">
+      <a href="/"></a>
+    </div>
+    <i id="menu-toggle" class="iconfont icon-menu"></i>
+    <nav class="g-nav">
+        <ul>
+            
+            <li><a href="/">Home</a></li>
+            
+            <li><a href="/tags.html">Tags</a></li>
+            
+        </ul>
+    </nav>
+</header>
+
+
+<header class="g-banner post-header post-pattern-circuitBoard bgcolor-default post-no-cover" data-theme="default">
+    <div class="post-wrapper">
+        <div class="post-tags">
+            
+            
+            <a href="http://localhost:4000/tags.html#php" class="post-tag">php</a>
+            
+            
+        </div>
+        <h1>对于PHP引用的理解,以及在实际项目中的使用</h1>
+        <div class="post-meta">
+            <span class="post-meta-item"><i class="iconfont icon-author"></i><a href="http://localhost:4000" target="_blank" rel="author">sunjialei</a></></span>
+            <time class="post-meta-item" datetime="2018-01-31"><i class="iconfont icon-date"></i>2018-01-31</time>
+        </div>
+    </div>
+    
+</header>
+
+<div class="post-content">
+    
+    <article class="markdown-body">
+        <div class="post-forward-message">本文章地址：http://localhost:4000/2018/01/31/php&.html 转载请注明出处</div>
+        <p>以下是我对于php中引用的理解</p>
+
+<h3 id="先看下面这2种情况">先看下面这2种情况</h3>
+
+<p>第一种：</p>
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="nv">$a</span> <span class="o">=</span> <span class="s1">'张三'</span><span class="p">;</span>
+	<span class="nv">$b</span> <span class="o">=</span> <span class="nv">$a</span><span class="p">;</span>
+	<span class="nv">$b</span> <span class="o">=</span> <span class="s1">'李四'</span><span class="p">;</span>
+	<span class="k">echo</span> <span class="nv">$a</span><span class="p">;</span>
+	<span class="k">echo</span> <span class="s1">'&lt;pre&gt;'</span><span class="p">;</span>
+	<span class="k">echo</span> <span class="nv">$b</span><span class="p">;</span>
+	<span class="nx">结果</span><span class="o">:</span>	<span class="nx">张三</span>
+			<span class="nx">李四</span>	
+</code></pre></div></div>
+
+<p>第二种：</p>
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="nv">$a</span> <span class="o">=</span> <span class="s1">'张三'</span><span class="p">;</span>
+	<span class="nv">$b</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nv">$a</span><span class="p">;</span>
+	<span class="nv">$b</span> <span class="o">=</span> <span class="s1">'李四'</span><span class="p">;</span>
+	<span class="k">echo</span> <span class="nv">$a</span><span class="p">;</span>
+	<span class="k">echo</span> <span class="s1">'&lt;pre&gt;'</span><span class="p">;</span>
+	<span class="k">echo</span> <span class="nv">$b</span><span class="p">;</span>
+	<span class="nx">结果</span><span class="o">:</span>	<span class="nx">李四</span>
+			<span class="nx">李四</span>	
+</code></pre></div></div>
+
+<p>对于第一种都能理解,把张三赋值给了变量a,然后把变量a的值也就是张三赋值给了$b,然后改变$b的值，$a不受$b值的改变而改变,因为它们俩指向的不是同一个地方。
+而第二种情况，$b = &amp;$a,这行代码的意思是$b和$a都指向同一个地方,只要其中任意一方改变，另一方也会跟着改变，所以改变$b的值$a也会跟着变</p>
+
+<h3 id="再看接下来这种情况">再看接下来这种情况</h3>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="nv">$a</span> <span class="o">=</span> <span class="s1">'张三'</span><span class="p">;</span>
+	<span class="nv">$b</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nv">$a</span><span class="p">;</span>
+	<span class="k">echo</span> <span class="nv">$a</span><span class="o">.</span><span class="nv">$b</span><span class="p">;</span>
+	<span class="k">echo</span> <span class="s1">'&lt;pre&gt;'</span><span class="p">;</span>
+
+	<span class="nv">$c</span> <span class="o">=</span> <span class="s1">'李四'</span><span class="p">;</span>
+	<span class="nv">$b</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nv">$c</span><span class="p">;</span>
+	<span class="k">echo</span> <span class="nv">$a</span><span class="o">.</span><span class="nv">$b</span><span class="o">.</span><span class="nv">$c</span><span class="p">;</span>
+
+	<span class="nx">结果</span><span class="err">：</span><span class="nx">张三张三</span>
+		<span class="nx">张三李四李四</span>
+</code></pre></div></div>
+<p>这种情况首先输出$a.$b结果为张三张三好理解,因为都是指向的同一个地方。 输出$a.$b.$c显示张三李四李四, $b重新指向了$c所在的变量内容，而$a不变。</p>
+
+<h3 id="根据上面的情况在实际项目中可能会遇到这种情况">根据上面的情况，在实际项目中可能会遇到这种情况:</h3>
+<p>从数据库中查出的结果如:</p>
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="nv">$list</span> <span class="o">=</span> <span class="p">[</span>
+		<span class="p">[</span><span class="s1">'id'</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'name'</span> <span class="o">=&gt;</span> <span class="s1">'小明'</span><span class="p">,</span> <span class="s1">'sex'</span> <span class="o">=&gt;</span> <span class="s1">'男'</span><span class="p">],</span>
+		<span class="p">[</span><span class="s1">'id'</span> <span class="o">=&gt;</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'name'</span> <span class="o">=&gt;</span> <span class="s1">'小丽'</span><span class="p">,</span> <span class="s1">'sex'</span> <span class="o">=&gt;</span> <span class="s1">'女'</span><span class="p">],</span>
+	<span class="p">];</span>
+	<span class="nx">这时要给这个结果中每一项添加一个字段</span><span class="p">,</span><span class="nx">比如所在学校</span><span class="p">,</span><span class="nx">之后将这个</span><span class="nv">$list结果返回</span>
+    <span class="k">foreach</span> <span class="p">(</span><span class="nv">$list</span> <span class="k">as</span> <span class="nv">$item</span><span class="p">)</span> <span class="p">{</span>
+		<span class="c1">//根据id查出每人所在的学校</span>
+		<span class="o">.......</span>
+		<span class="nv">$item</span><span class="p">[</span><span class="s1">'school'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'羊尖实验小学'</span><span class="p">;</span>
+		<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$list</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+		<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$item</span><span class="p">);</span>
+		<span class="k">die</span><span class="p">;</span>
+    <span class="p">}</span>
+	<span class="nx">结果</span><span class="o">:</span>
+	<span class="k">array</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+	  <span class="p">[</span><span class="s2">"title"</span><span class="p">]</span><span class="o">=&gt;</span>
+	  <span class="nx">string</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="s2">"dsds"</span>
+	  <span class="p">[</span><span class="s2">"name"</span><span class="p">]</span><span class="o">=&gt;</span>
+	  <span class="nx">string</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span> <span class="s2">"大多数"</span>
+	<span class="p">}</span>
+	<span class="k">array</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="p">{</span>
+	  <span class="p">[</span><span class="s2">"title"</span><span class="p">]</span><span class="o">=&gt;</span>
+	  <span class="nx">string</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="s2">"dsds"</span>
+	  <span class="p">[</span><span class="s2">"name"</span><span class="p">]</span><span class="o">=&gt;</span>
+	  <span class="nx">string</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span> <span class="s2">"大多数"</span>
+	  <span class="p">[</span><span class="s2">"school"</span><span class="p">]</span><span class="o">=&gt;</span>
+	  <span class="nx">string</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="s2">"羊尖实验小学"</span>
+	<span class="p">}</span>
+	<span class="nx">可见</span><span class="nv">$list中并没有school这个字段</span><span class="err">。</span>
+	
+	<span class="nx">如果使用引用的话</span>
+	<span class="k">foreach</span> <span class="p">(</span><span class="nv">$list</span> <span class="k">as</span> <span class="o">&amp;</span><span class="nv">$item</span><span class="p">)</span> <span class="p">{</span>
+		<span class="c1">//根据id查出每人所在的学校</span>
+		<span class="o">.......</span>
+		<span class="nv">$item</span><span class="p">[</span><span class="s1">'school'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'羊尖实验小学'</span><span class="p">;</span>
+		<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$list</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+		<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$item</span><span class="p">);</span>
+		<span class="k">die</span><span class="p">;</span>
+    <span class="p">}</span>
+	<span class="nx">结果</span><span class="o">:</span>
+	<span class="k">array</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+	  <span class="p">[</span><span class="s2">"title"</span><span class="p">]</span><span class="o">=&gt;</span>
+	  <span class="nx">string</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="s2">"dsds"</span>
+	  <span class="p">[</span><span class="s2">"name"</span><span class="p">]</span><span class="o">=&gt;</span>
+	  <span class="nx">string</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span> <span class="s2">"大多数"</span><span class="p">,</span>
+	  <span class="p">[</span><span class="s2">"school"</span><span class="p">]</span><span class="o">=&gt;</span>
+	  <span class="nx">string</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="s2">"羊尖实验小学"</span>
+	<span class="p">}</span>
+	<span class="k">array</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="p">{</span>
+	  <span class="p">[</span><span class="s2">"title"</span><span class="p">]</span><span class="o">=&gt;</span>
+	  <span class="nx">string</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="s2">"dsds"</span>
+	  <span class="p">[</span><span class="s2">"name"</span><span class="p">]</span><span class="o">=&gt;</span>
+	  <span class="nx">string</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span> <span class="s2">"大多数"</span>
+	  <span class="p">[</span><span class="s2">"school"</span><span class="p">]</span><span class="o">=&gt;</span>
+	  <span class="nx">string</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="s2">"羊尖实验小学"</span>
+	<span class="p">}</span>
+</code></pre></div></div>
+<p>当然，如果使用$list[0][‘school’]这种方式也行。</p>
+
+    </article>
+    
+    <div class="social-share-wrapper">
+        <div class="social-share"></div>
+    </div>
+    
+</div>
+
+<section class="author-detail">
+    <section class="post-footer-item author-card">
+        <div class="avatar">
+            <img src="/assets/img/profile.jpg" alt="">
+        </div>
+        <div class="author-name" rel="author">孙佳磊</div>
+        <div class="bio">
+            <p>PHP开发者,热爱技术</p>
+        </div>
+        
+        <ul class="sns-links">
+            
+            <li>
+                <a href="//github.com/cainiaosunjialei" target="_blank">
+                    <i class="iconfont icon-github"></i>
+                </a>
+            </li>
+            
+        </ul>
+        
+    </section>
+    <section class="post-footer-item read-next">
+        
+        
+        <div class="read-next-item">
+            <a href="/2018/01/29/nginx-conf.html" class="read-next-link"></a>
+            <section>
+                <span>Linux下配置Nginx</span>
+                <p>Linux下Nginx的简单配置</p>
+            </section>
+            
+        </div>
+        
+    </section>
+    
+</section>
+
+<footer class="g-footer">
+    <section>孙佳磊的博客 © 2018</section>
+    <section>Powered by <a href="//jekyllrb.com">Jekyll</a> | <a href="https://github.com/kaeyleo/jekyll-theme-H2O">Theme H2O</a></section>
+</footer>
+
+<script src="/assets/js/social-share.min.js"></script>
+<script>
+    socialShare('.social-share', {
+        sites: ['wechat','weibo','douban','twitter'],
+        wechatQrcodeTitle: "分享到微信朋友圈",
+        wechatQrcodeHelper: '<p>扫码后点击右上角</p><p>将本文分享至朋友圈</p>'
+    });
+</script>
+<script>
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+//var d = document, s = d.createElement('script');
+/*写入自己的disqus信息*/
+//s.src = 'https://liaokeyu.disqus.com/embed.js';
+//s.setAttribute('data-timestamp', +new Date());
+//(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/js/prism.js"></script>
+<script src="/assets/js/index.min.js"></script>
+</body>
+</html>
