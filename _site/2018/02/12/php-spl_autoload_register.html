@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>关于php的命名空间非限定、限定、完全限定的理解与自动加载之spl_autoload_register() - 孙佳磊的博客</title>
+    <meta name="author"  content="孙佳磊">
+    <meta name="description" content="关于php的命名空间非限定、限定、完全限定的理解与自动加载之spl_autoload_register()">
+    <meta name="keywords"  content="php">
+    <!-- Open Graph -->
+    <meta property="og:title" content="关于php的命名空间非限定、限定、完全限定的理解与自动加载之spl_autoload_register() - 孙佳磊的博客">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="http://localhost:4000/2018/02/12/php-spl_autoload_register.html">
+    <meta property="og:description" content="一位PHP开发对技术的一点分享。">
+    <meta property="og:site_name" content="孙佳磊的博客">
+    <link rel="stylesheet" href="//cdn.staticfile.org/normalize/6.0.0/normalize.min.css">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_roc50gemkxpw4s4i.css">
+    <link rel="stylesheet" href="/assets/css/github-markdown.css">
+    <link rel="stylesheet" href="/assets/css/prism.css">
+    <link rel="stylesheet" href="/assets/css/share.min.css">
+    <link rel="stylesheet" href="/assets/css/app.min.css">
+    <link rel="stylesheet" href="/assets/css/common.css">
+</head>
+<body>
+    <!--[if lt IE 10]>
+<div class="alert-danger" role="alert">你的浏览器实在太太太旧了，放学别走，升级完浏览器再说！<a target="_blank" class="alert-link" href="http://browsehappy.com">立即升级</a></div>
+<![endif]-->
+<input id="nm-switch" type="hidden" value="false">
+
+<header class="g-header">
+    <div class="g-logo">
+      <a href="/"></a>
+    </div>
+    <i id="menu-toggle" class="iconfont icon-menu"></i>
+    <nav class="g-nav">
+        <ul>
+            
+            <li><a href="/">Home</a></li>
+            
+            <li><a href="/tags.html">Tags</a></li>
+            
+        </ul>
+    </nav>
+</header>
+
+
+<header class="g-banner post-header post-pattern-circuitBoard bgcolor-default post-no-cover" data-theme="default">
+    <div class="post-wrapper">
+        <div class="post-tags">
+            
+            
+            <a href="http://localhost:4000/tags.html#php" class="post-tag">php</a>
+            
+            
+        </div>
+        <h1>关于php的命名空间非限定、限定、完全限定的理解与自动加载之spl_autoload_register()</h1>
+        <div class="post-meta">
+            <span class="post-meta-item"><i class="iconfont icon-author"></i><a href="http://localhost:4000" target="_blank" rel="author">sunjialei</a></></span>
+            <time class="post-meta-item" datetime="2018-02-12"><i class="iconfont icon-date"></i>2018-02-12</time>
+        </div>
+    </div>
+    
+</header>
+
+<div class="post-content">
+    
+    <article class="markdown-body">
+        <div class="post-forward-message">本文章地址：http://localhost:4000/2018/02/12/php-spl_autoload_register.html 转载请注明出处</div>
+        <p>做项目这么久以来一直没有好好的静下心来对自身思考有哪些不足之处,有些东西虽然用了，但没去考虑过为什么是这样的，现在越来越觉得自己基础不够扎实。虽然我不是科班出身也没有在培训班培训过,但干这行就得靠自己去悟去想。</p>
+
+<p>最近思考了以下2个问题：</p>
+
+<h4 id="1为什么有时候实例化一个类是以开头的有的时候又不是呢">1.为什么有时候实例化一个类是以\开头的,有的时候又不是呢?</h4>
+
+<h4 id="2为什么在yii-2-laravel-5这类的框架控制器中new一个对象框架能知道获取的是哪个路径下的文件呢">2.为什么在Yii 2、 Laravel 5这类的框架控制器中new一个对象,框架能知道获取的是哪个路径下的文件呢？</h4>
+
+<p>针对于上面2个问题,我解答下。</p>
+
+<p>我在我本地C:\php\laragon\www目录下新建一个文件夹名为test
+然后建立以下结构
+<img class="header-img" src="/assets/img/2018-2-12.png" alt="" /></p>
+
+<p>Autoloader.php</p>
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+	<span class="k">namespace</span> <span class="nx">test</span><span class="p">;</span>
+
+	<span class="nb">spl_autoload_register</span><span class="p">(</span><span class="k">function</span><span class="p">(</span><span class="nv">$className</span><span class="p">)</span> <span class="p">{</span>
+		<span class="nv">$className</span> <span class="o">=</span> <span class="nb">str_replace</span><span class="p">(</span><span class="s1">'\\'</span><span class="p">,</span> <span class="nx">DIRECTORY_SEPARATOR</span><span class="p">,</span> <span class="nv">$className</span><span class="p">);</span>
+		<span class="nv">$path</span> <span class="o">=</span> <span class="nb">dirname</span><span class="p">(</span><span class="nx">__DIR__</span><span class="p">);</span>
+		<span class="nv">$fullFile</span> <span class="o">=</span> <span class="nv">$path</span> <span class="o">.</span> <span class="nx">DIRECTORY_SEPARATOR</span> <span class="o">.</span><span class="nv">$className</span><span class="o">.</span><span class="s1">'.php'</span><span class="p">;</span>
+		<span class="k">if</span> <span class="p">(</span><span class="nb">file_exists</span><span class="p">(</span><span class="nv">$fullFile</span><span class="p">))</span> <span class="p">{</span>
+			<span class="k">include</span>  <span class="nv">$fullFile</span><span class="p">;</span>
+		<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+			<span class="k">echo</span> <span class="s1">'文件'</span><span class="o">.</span><span class="nv">$fullFile</span><span class="o">.</span><span class="s1">'不存在'</span><span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">});</span>
+</code></pre></div></div>
+
+<p>MyTool.php</p>
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+	<span class="k">namespace</span> <span class="nx">test\src\tools</span><span class="p">;</span>
+
+	<span class="k">class</span> <span class="nc">MyTool</span> <span class="p">{</span>
+
+		<span class="k">public</span> <span class="k">function</span> <span class="nf">__construct</span><span class="p">()</span> <span class="p">{</span>
+			<span class="k">echo</span> <span class="s1">'mytool'</span><span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">}</span>	
+</code></pre></div></div>
+
+<p>index.php</p>
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+	<span class="k">namespace</span> <span class="nx">test</span><span class="p">;</span>
+
+	<span class="k">include</span> <span class="s1">'Autoloader.php'</span><span class="p">;</span>
+
+	<span class="k">class</span> <span class="nc">A</span> <span class="p">{</span>
+
+		<span class="k">public</span> <span class="k">function</span> <span class="nf">__construct</span> <span class="p">()</span> <span class="p">{</span>
+			<span class="k">echo</span> <span class="s1">'怎么能'</span><span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+
+	<span class="nv">$res</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">A</span><span class="p">();</span> 
+	<span class="k">echo</span> <span class="s2">"&lt;br&gt;"</span><span class="p">;</span>
+
+	<span class="nv">$res</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">src\tools\MyTool</span><span class="p">();</span>
+	<span class="k">echo</span> <span class="s2">"&lt;br&gt;"</span><span class="p">;</span>
+
+	<span class="nv">$res</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\test\src\tools\MyTool</span><span class="p">();</span>
+	<span class="k">echo</span> <span class="s2">"&lt;br&gt;"</span><span class="p">;</span>
+
+	<span class="nv">$res</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\src\tools\MyTool</span><span class="p">();</span> 
+</code></pre></div></div>
+<p>运行结果：</p>
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="nx">怎么能</span>
+
+	<span class="nx">mytool</span>
+
+	<span class="nx">mytool</span>
+
+	<span class="nx">文件C</span><span class="o">:</span><span class="nx">\php\laragon\www\src\tools\MyTool</span><span class="o">.</span><span class="nx">php不存在</span>
+<span class="nx">Fatal</span> <span class="nx">error</span><span class="o">:</span> <span class="nx">Uncaught</span> <span class="nx">Error</span><span class="o">:</span> <span class="nx">Class</span> <span class="s1">'src\tools\MyTool'</span> <span class="k">not</span> <span class="nx">found</span> <span class="nx">in</span> <span class="nx">C</span><span class="o">:</span><span class="nx">\php\laragon\www\test\index</span><span class="o">.</span><span class="nx">php</span><span class="o">:</span><span class="mi">22</span> <span class="nx">Stack</span> <span class="nx">trace</span><span class="o">:</span> <span class="c1">#0 {main} thrown in C:\php\laragon\www\test\index.php on line 22</span>
+</code></pre></div></div>
+
+<h4 id="原因">原因：</h4>
+
+<h4 id="由于当前indexphp命名空间为testnew-a代表在test命名空间中寻找类名为a的类然后实例化这种方式为非限定名称">由于当前index.php命名空间为test,new A()代表在test命名空间中寻找类名为A的类然后实例化。这种方式为非限定名称</h4>
+
+<h4 id="由于当前indexphp命名空间为testnew-srctoolsmytool代表在命名空间为testsrctools下寻找类名为mytool的类然后实例化这种方式称为限定名称">由于当前index.php命名空间为test,new src\tools\MyTool()代表在命名空间为test\src\tools下寻找类名为MyTool的类然后实例化。这种方式称为限定名称</h4>
+
+<h4 id="new-testsrctoolsmytool这个前面有这种方式称为完全限定名称不管当前命名空间是啥寻找命名空间为testsrctools下类名为mytool的类然后实例化">new \test\src\tools\MyTool(),这个前面有\,这种方式称为完全限定名称,不管当前命名空间是啥,寻找命名空间为test\src\tools下类名为MyTool的类然后实例化</h4>
+
+<h4 id="new-srctoolsmytool-同上由于不存在命名空间为srctools下的mytool的类所以报错">new \src\tools\MyTool(), 同上,由于不存在命名空间为src\tools下的MyTool的类,所以报错</h4>
+
+<p>那么又有个问题,它是怎么寻找文件路径的呢?在index.php中引入Autoloader.php这个文件,当new src\tools\MyTool()的时候在去调用spl_autoload_register这个方法,传入的className是 test\src\tools\MyTool,最终找的文件名称路径为C:\php\laragon\www\test\src\tools\MyTool.php，如果存在该文件则导入该文件。如果在顶部使用了use test\src\tools,new MyTool(),传入的className还是test\src\tools\MyTool。</p>
+
+<p>Laravel、Yii这类框架中都在入口文件中使用了spl_autoload_register这个方法进行自动加载</p>
+
+
+    </article>
+    
+    <div class="social-share-wrapper">
+        <div class="social-share"></div>
+    </div>
+    
+</div>
+
+<section class="author-detail">
+    <section class="post-footer-item author-card">
+        <div class="avatar">
+            <img src="/assets/img/profile.jpg" alt="">
+        </div>
+        <div class="author-name" rel="author">孙佳磊</div>
+        <div class="bio">
+            <p>PHP开发者,热爱技术</p>
+        </div>
+        
+        <ul class="sns-links">
+            
+            <li>
+                <a href="//github.com/cainiaosunjialei" target="_blank">
+                    <i class="iconfont icon-github"></i>
+                </a>
+            </li>
+            
+        </ul>
+        
+    </section>
+    <section class="post-footer-item read-next">
+        
+        <div class="read-next-item">
+            <a href="/2018/05/06/phalcon.html" class="read-next-link"></a>
+            <section>
+                <span>Windows下Phalcon的安装以及phpstorm识别phalcon语法及提示</span>
+                <p>新入职一家公司,使用的开发框架是Phalcon框架,下面是使用这个框架之前的一些准备工作。</p>
+            </section>
+            
+        </div>
+        
+        
+        <div class="read-next-item">
+            <a href="/2018/02/10/php-zhuanyi.html" class="read-next-link"></a>
+            <section>
+                <span>php中神奇的转义</span>
+                <p>今天发现个奇怪的事。如下</p>
+            </section>
+            
+        </div>
+        
+    </section>
+    
+</section>
+
+<footer class="g-footer">
+    <section>孙佳磊的博客 © 2018</section>
+    <section>Powered by <a href="//jekyllrb.com">Jekyll</a> | <a href="https://github.com/kaeyleo/jekyll-theme-H2O">Theme H2O</a></section>
+</footer>
+
+<script src="/assets/js/social-share.min.js"></script>
+<script>
+    socialShare('.social-share', {
+        sites: ['wechat','weibo','douban','twitter'],
+        wechatQrcodeTitle: "分享到微信朋友圈",
+        wechatQrcodeHelper: '<p>扫码后点击右上角</p><p>将本文分享至朋友圈</p>'
+    });
+</script>
+<script>
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+//var d = document, s = d.createElement('script');
+/*写入自己的disqus信息*/
+//s.src = 'https://liaokeyu.disqus.com/embed.js';
+//s.setAttribute('data-timestamp', +new Date());
+//(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/js/prism.js"></script>
+<script src="/assets/js/index.min.js"></script>
+</body>
+</html>
