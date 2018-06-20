@@ -1,6 +1,18 @@
 [
   
     {
+      "title"    : "个人对于单例模式中类只能被实例化1次的理解",
+      "tags"     : "php",
+      "url"      : "/2018/06/20/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F.html"
+    } ,
+  
+    {
+      "title"    : "SSH远程连接VirtualBox虚拟机Ubuntu",
+      "tags"     : "php",
+      "url"      : "/2018/06/20/openssh.html"
+    } ,
+  
+    {
       "title"    : "Windows下Phalcon的安装以及phpstorm识别phalcon语法及提示",
       "tags"     : "php phalcon",
       "url"      : "/2018/05/06/phalcon.html"

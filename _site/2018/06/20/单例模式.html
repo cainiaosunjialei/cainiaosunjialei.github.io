@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人对于单例模式中类只能被实例化1次的理解 - 孙佳磊的博客</title>
+    <meta name="author"  content="孙佳磊">
+    <meta name="description" content="个人对于单例模式中类只能被实例化1次的理解">
+    <meta name="keywords"  content="php">
+    <!-- Open Graph -->
+    <meta property="og:title" content="个人对于单例模式中类只能被实例化1次的理解 - 孙佳磊的博客">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="http://localhost:4000/2018/06/20/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F.html">
+    <meta property="og:description" content="一位PHP开发对技术的一点分享。">
+    <meta property="og:site_name" content="孙佳磊的博客">
+    <link rel="stylesheet" href="//cdn.staticfile.org/normalize/6.0.0/normalize.min.css">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_roc50gemkxpw4s4i.css">
+    <link rel="stylesheet" href="/assets/css/github-markdown.css">
+    <link rel="stylesheet" href="/assets/css/prism.css">
+    <link rel="stylesheet" href="/assets/css/share.min.css">
+    <link rel="stylesheet" href="/assets/css/app.min.css">
+    <link rel="stylesheet" href="/assets/css/common.css">
+</head>
+<body>
+    <!--[if lt IE 10]>
+<div class="alert-danger" role="alert">你的浏览器实在太太太旧了，放学别走，升级完浏览器再说！<a target="_blank" class="alert-link" href="http://browsehappy.com">立即升级</a></div>
+<![endif]-->
+<input id="nm-switch" type="hidden" value="false">
+
+<header class="g-header">
+    <div class="g-logo">
+      <a href="/"></a>
+    </div>
+    <i id="menu-toggle" class="iconfont icon-menu"></i>
+    <nav class="g-nav">
+        <ul>
+            
+            <li><a href="/">Home</a></li>
+            
+            <li><a href="/tags.html">Tags</a></li>
+            
+        </ul>
+    </nav>
+</header>
+
+
+<header class="g-banner post-header post-pattern-circuitBoard bgcolor-default post-no-cover" data-theme="default">
+    <div class="post-wrapper">
+        <div class="post-tags">
+            
+            
+            <a href="http://localhost:4000/tags.html#php" class="post-tag">php</a>
+            
+            
+        </div>
+        <h1>个人对于单例模式中类只能被实例化1次的理解</h1>
+        <div class="post-meta">
+            <span class="post-meta-item"><i class="iconfont icon-author"></i><a href="http://localhost:4000" target="_blank" rel="author">sunjialei</a></></span>
+            <time class="post-meta-item" datetime="2018-06-20"><i class="iconfont icon-date"></i>2018-06-20</time>
+        </div>
+    </div>
+    
+</header>
+
+<div class="post-content">
+    
+    <article class="markdown-body">
+        <div class="post-forward-message">本文章地址：http://localhost:4000/2018/06/20/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F.html 转载请注明出处</div>
+        <p>今天回过去看单例模式的时候突然想到一个问题：</p>
+<h5 id="php中有垃圾回收机制会把对象销毁而单例模式的好处是类只能被实例化1次当以后再调用的时候对象已经被创建了无需再次创建对象">php中有垃圾回收机制,会把对象销毁。而单例模式的好处是类只能被实例化1次,当以后再调用的时候对象已经被创建了,无需再次创建对象。</h5>
+<p>那么就有个问题，这是不是代表着单例模式的对象不会被垃圾回收机制回收销毁? 带着这个疑问,我在网上查阅了相关资料,并经过自己的理解,得出以下结论：</p>
+<h5 id="php中的垃圾回收机制是会把长时间不用的对象给回收销毁的单例模式中的对象也不例外但不是说过单例模式的优点是类只需实例化1次吗">php中的垃圾回收机制是会把长时间不用的对象给回收销毁的，单例模式中的对象也不例外,但不是说过单例模式的优点是类只需实例化1次吗？</h5>
+<h5 id="是这样的单例模式并不是它的对象永远就只有一个而是在该类已经创建一个对象的情况下不允许再创建另一个对象当对象长时间不使用就会被回收要再次使用的时候还需要实例化">是这样的,单例模式并不是它的对象永远就只有一个,而是在该类已经创建一个对象的情况下,不允许再创建另一个对象。当对象长时间不使用,就会被回收,要再次使用的时候还需要实例化</h5>
+
+    </article>
+    
+    <div class="social-share-wrapper">
+        <div class="social-share"></div>
+    </div>
+    
+</div>
+
+<section class="author-detail">
+    <section class="post-footer-item author-card">
+        <div class="avatar">
+            <img src="/assets/img/profile.jpg" alt="">
+        </div>
+        <div class="author-name" rel="author">孙佳磊</div>
+        <div class="bio">
+            <p>PHP开发者,热爱技术</p>
+        </div>
+        
+        <ul class="sns-links">
+            
+            <li>
+                <a href="//github.com/cainiaosunjialei" target="_blank">
+                    <i class="iconfont icon-github"></i>
+                </a>
+            </li>
+            
+        </ul>
+        
+    </section>
+    <section class="post-footer-item read-next">
+        
+        
+        <div class="read-next-item">
+            <a href="/2018/06/20/openssh.html" class="read-next-link"></a>
+            <section>
+                <span>SSH远程连接VirtualBox虚拟机Ubuntu</span>
+                <p>ssh远程连接虚拟机的Ubuntu步骤如下：</p>
+            </section>
+            
+        </div>
+        
+    </section>
+    
+</section>
+
+<footer class="g-footer">
+    <section>孙佳磊的博客 © 2018</section>
+    <section>Powered by <a href="//jekyllrb.com">Jekyll</a> | <a href="https://github.com/kaeyleo/jekyll-theme-H2O">Theme H2O</a></section>
+</footer>
+
+<script src="/assets/js/social-share.min.js"></script>
+<script>
+    socialShare('.social-share', {
+        sites: ['wechat','weibo','douban','twitter'],
+        wechatQrcodeTitle: "分享到微信朋友圈",
+        wechatQrcodeHelper: '<p>扫码后点击右上角</p><p>将本文分享至朋友圈</p>'
+    });
+</script>
+<script>
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+//var d = document, s = d.createElement('script');
+/*写入自己的disqus信息*/
+//s.src = 'https://liaokeyu.disqus.com/embed.js';
+//s.setAttribute('data-timestamp', +new Date());
+//(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/js/prism.js"></script>
+<script src="/assets/js/index.min.js"></script>
+</body>
+</html>
