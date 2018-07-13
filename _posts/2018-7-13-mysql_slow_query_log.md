@@ -34,10 +34,10 @@ mysql> show variables like '%query%';
 +------------------------------+-------------------------------+
 13 rows in set (0.00 sec)
 ```
-其中slow_query_log的值OFF代表没开启慢日志查询,ON的话代表开启了慢日志查询。slow_query_log_file代表慢日志查询存放在什么位置。
+其中slow_query_log的值OFF代表没开启慢查询日志,ON的话代表开启了慢查询日志。slow_query_log_file代表慢查询日志存放在什么位置。
 
 
-开启慢日志查询
+开启慢查询日志
 ```mysql
 cd /etc/mysql/mysql.conf.d
 sudo vim mysqld.cnf
