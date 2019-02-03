@@ -94,7 +94,6 @@ absoulute是相对于它的父元素,注意:是有定位的父元素来说的,�
             background-color: orange;
             margin-left: 200px;
             margin-top: 200px;
-            position: relative
         }
         #box {
             width: 150px;
@@ -132,6 +131,7 @@ box的父元素是orange,父元素没有定位,继续冒泡往上找,上面没�
             background-color: orange;
             margin-left: 200px;
             margin-top: 200px;
+            position: relative
         }
         #box {
             width: 150px;
