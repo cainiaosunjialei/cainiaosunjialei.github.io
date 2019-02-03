@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Linux下配置Nginx - 孙佳磊的博客</title>
+    <title>允许远程访问mysql,开启remote access - 孙佳磊的博客</title>
     <meta name="author"  content="孙佳磊">
-    <meta name="description" content="Linux下配置Nginx">
-    <meta name="keywords"  content="nginx, linux">
+    <meta name="description" content="允许远程访问mysql,开启remote access">
+    <meta name="keywords"  content="linux">
     <!-- Open Graph -->
-    <meta property="og:title" content="Linux下配置Nginx - 孙佳磊的博客">
+    <meta property="og:title" content="允许远程访问mysql,开启remote access - 孙佳磊的博客">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="http://localhost:4000/2018/01/29/nginx-conf.html">
+    <meta property="og:url" content="http://localhost:4000/2018/06/24/%E5%BC%80%E5%90%AFmysql-remote-access.html">
     <meta property="og:description" content="一位PHP开发对技术的一点分享。">
     <meta property="og:site_name" content="孙佳磊的博客">
     <link rel="stylesheet" href="//cdn.staticfile.org/normalize/6.0.0/normalize.min.css">
@@ -49,16 +49,14 @@
         <div class="post-tags">
             
             
-            <a href="http://localhost:4000/tags.html#nginx" class="post-tag">nginx</a>
-            
             <a href="http://localhost:4000/tags.html#linux" class="post-tag">linux</a>
             
             
         </div>
-        <h1>Linux下配置Nginx</h1>
+        <h1>允许远程访问mysql,开启remote access</h1>
         <div class="post-meta">
             <span class="post-meta-item"><i class="iconfont icon-author"></i><a href="http://localhost:4000" target="_blank" rel="author">sunjialei</a></></span>
-            <time class="post-meta-item" datetime="2018-01-29"><i class="iconfont icon-date"></i>2018-01-29</time>
+            <time class="post-meta-item" datetime="2018-06-24"><i class="iconfont icon-date"></i>2018-06-24</time>
         </div>
     </div>
     
@@ -67,50 +65,39 @@
 <div class="post-content">
     
     <article class="markdown-body">
-        <div class="post-forward-message">本文章地址：http://localhost:4000/2018/01/29/nginx-conf.html 转载请注明出处</div>
-        <p>Linux下Nginx的简单配置</p>
+        <div class="post-forward-message">本文章地址：http://localhost:4000/2018/06/24/%E5%BC%80%E5%90%AFmysql-remote-access.html 转载请注明出处</div>
+        <p>比如在多人开发的情况下,需要使用同一台服务器的数据库,每个开发人员本地使用如Navicat这类的mysql管理工具远程连接这台服务器,可能无法连接上,这个时候就需要开启mysql remote access。步骤如下：</p>
 
-<h3 id="1进入到安装nginx的目录">1.进入到安装Nginx的目录</h3>
-<div class="language-nginx highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="k">cd</span> <span class="n">/usr/local/nginx</span>
-</code></pre></div></div>
+<p>1.进入服务器mysql配置文件中</p>
 
-<h3 id="2进入nginx的配置文件nginxconf">2.进入nginx的配置文件nginx.conf</h3>
-<div class="language-nginx highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="k">vim</span> <span class="s">nginx.conf</span>
-</code></pre></div></div>
+<pre><code class="language-linux">cd /etc/mysql/mysql.conf.d
 
-<h3 id="3在nginx目录下创建一个confd文件夹在配置文件中将该文件夹下的文件引入">3.在nginx目录下创建一个conf.d文件夹,在配置文件中将该文件夹下的文件引入</h3>
-<div class="language-nginx highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="k">include</span> <span class="n">/usr/local/nginx/conf.d/*.conf</span>
-</code></pre></div></div>
+sudo vim mysqld.cnf
+</code></pre>
 
-<h3 id="4在confd文件夹下创建文件如liveconf进入liveconf目录">4.在conf.d文件夹下创建文件如live.conf,进入live.conf目录</h3>
-<div class="language-nginx highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="k">server</span> <span class="p">{</span>
-        <span class="kn">listen</span>  <span class="mi">8001</span><span class="p">;</span>
-        <span class="kn">server_name</span>  <span class="s">example1.com</span><span class="p">;</span>
+<p>其中有一行: bind-address = 127.0.0.1,这相当于白名单,只有ip地址在里面的才能访问这台服务器的mysql数据库,只要把这行注释掉即可</p>
 
-        <span class="kn">location</span> <span class="n">/</span> <span class="p">{</span>
-            <span class="kn">root</span>   <span class="n">/data/live/trunk/system/backend/web</span><span class="p">;</span>
-            <span class="kn">index</span>  <span class="s">index.php</span> <span class="s">index.html</span> <span class="s">index.htm</span><span class="p">;</span>
-            <span class="kn">try_files</span> <span class="nv">$uri</span> <span class="nv">$uri</span><span class="n">/</span> <span class="n">/index.php?</span><span class="nv">$args</span><span class="p">;</span>
-        <span class="p">}</span>
+<pre><code class="language-linux">#bind-address =  127.0.0.1
+</code></pre>
 
-        <span class="kn">location</span> <span class="p">~</span> <span class="sr">.php$</span> <span class="p">{</span>
-            <span class="kn">fastcgi_pass</span>   <span class="nf">127.0.0.1</span><span class="p">:</span><span class="mi">9000</span><span class="p">;</span>
-            <span class="kn">fastcgi_index</span>  <span class="s">index.php</span><span class="p">;</span>
-            <span class="kn">fastcgi_param</span>  <span class="s">SCRIPT_FILENAME</span>  <span class="n">/data/live/trunk/system/backend/web</span><span class="nv">$fastcgi_script_name</span><span class="p">;</span>
-            <span class="kn">include</span>        <span class="s">fastcgi_params</span><span class="p">;</span>
+<p>2.对mysql的默认用户进行主机设置</p>
 
-        <span class="p">}</span>
-	<span class="p">}</span>
-	<span class="k">其中listen是端口号,server_name是网站域名,root指向的是网站的根目录</span>
+<pre><code class="language-linux">cd /etc/mysql
 
-</code></pre></div></div>
+mysql -u root -p
 
-<h3 id="5重启nginx服务器">5.重启nginx服务器</h3>
-<p>进入nginx目录中,执行：</p>
-<div class="language-nginx highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="k">sbin/nginx</span> <span class="s">-s</span> <span class="s">reload</span>
-	
-</code></pre></div></div>
+mysql&gt;use mysql;
 
+mysql&gt;update user set host = '%' where user = 'root';
+
+mysql&gt;exit
+</code></pre>
+
+<p>3.重启mysql,我的服务器是Ubuntu</p>
+<pre><code class="language-linux">sudo service mysql restart
+</code></pre>
+
+<p>这样就可以远程使用图形界面管理工具连接mysql了</p>
 
     </article>
     
@@ -144,20 +131,20 @@
     <section class="post-footer-item read-next">
         
         <div class="read-next-item">
-            <a href="/2018/01/31/php&.html" class="read-next-link"></a>
+            <a href="/2018/06/28/ubuntu16.04%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip.html" class="read-next-link"></a>
             <section>
-                <span>对于PHP引用的理解,以及在实际项目中的使用</span>
-                <p>以下是我对于php中引用的理解</p>
+                <span>Ubuntu16.04 设置静态IP</span>
+                <p>最近切换到linux环境下进行开发了,但由于电脑是win10,所以装了个虚拟机,通过xshell连接这台虚拟机,但...</p>
             </section>
             
         </div>
         
         
         <div class="read-next-item">
-            <a href="/2018/01/28/php-array_chunk.html" class="read-next-link"></a>
+            <a href="/2018/06/20/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F.html" class="read-next-link"></a>
             <section>
-                <span>PHP数组函数array_chunk的使用</span>
-                <p>最近在做某个项目的时候需要用到友盟推送,推送方式使用的是别名推送,根据用户id进行推送,要求是别名一次不能超过50...</p>
+                <span>个人对于单例模式中类只能被实例化1次的理解</span>
+                <p>今天回过去看单例模式的时候突然想到一个问题：php中有垃圾回收机制,会把对象销毁。而单例模式的好处是类只能被实例化...</p>
             </section>
             
         </div>

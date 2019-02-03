@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS定位position - 孙佳磊的博客</title>
+    <meta name="author"  content="孙佳磊">
+    <meta name="description" content="CSS定位position">
+    <meta name="keywords"  content="CSS">
+    <!-- Open Graph -->
+    <meta property="og:title" content="CSS定位position - 孙佳磊的博客">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="http://localhost:4000/2019/02/03/css-position.html">
+    <meta property="og:description" content="一位PHP开发对技术的一点分享。">
+    <meta property="og:site_name" content="孙佳磊的博客">
+    <link rel="stylesheet" href="//cdn.staticfile.org/normalize/6.0.0/normalize.min.css">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_roc50gemkxpw4s4i.css">
+    <link rel="stylesheet" href="/assets/css/github-markdown.css">
+    <link rel="stylesheet" href="/assets/css/prism.css">
+    <link rel="stylesheet" href="/assets/css/share.min.css">
+    <link rel="stylesheet" href="/assets/css/app.min.css">
+    <link rel="stylesheet" href="/assets/css/common.css">
+</head>
+<body>
+    <!--[if lt IE 10]>
+<div class="alert-danger" role="alert">你的浏览器实在太太太旧了，放学别走，升级完浏览器再说！<a target="_blank" class="alert-link" href="http://browsehappy.com">立即升级</a></div>
+<![endif]-->
+<input id="nm-switch" type="hidden" value="false">
+
+<header class="g-header">
+    <div class="g-logo">
+      <a href="/"></a>
+    </div>
+    <i id="menu-toggle" class="iconfont icon-menu"></i>
+    <nav class="g-nav">
+        <ul>
+            
+            <li><a href="/">Home</a></li>
+            
+            <li><a href="/tags.html">Tags</a></li>
+            
+        </ul>
+    </nav>
+</header>
+
+
+<header class="g-banner post-header post-pattern-circuitBoard bgcolor-default post-no-cover" data-theme="default">
+    <div class="post-wrapper">
+        <div class="post-tags">
+            
+            
+            <a href="http://localhost:4000/tags.html#CSS" class="post-tag">CSS</a>
+            
+            
+        </div>
+        <h1>CSS定位position</h1>
+        <div class="post-meta">
+            <span class="post-meta-item"><i class="iconfont icon-author"></i><a href="http://localhost:4000" target="_blank" rel="author">sunjialei</a></></span>
+            <time class="post-meta-item" datetime="2019-02-03"><i class="iconfont icon-date"></i>2019-02-03</time>
+        </div>
+    </div>
+    
+</header>
+
+<div class="post-content">
+    
+    <article class="markdown-body">
+        <div class="post-forward-message">本文章地址：http://localhost:4000/2019/02/03/css-position.html 转载请注明出处</div>
+        <p>最近在学习原生JavaScript,有个练手的小demo,放大镜的功能。做的过程中遇到一些跟CSS定位有关的知识,已经忘记了，只能回头重新学习下CSS的position知识点。</p>
+
+<p>CSS的position属性有4种值：static,relative,absolute,fixed</p>
+<h3 id="1static">1.static</h3>
+<p>默认的定位方式,不设置position属性默认就是static定位</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;style&gt;</span>
+        <span class="nt">body</span> <span class="p">{</span>
+            <span class="nl">background-color</span><span class="p">:</span> <span class="no">gray</span>
+        <span class="p">}</span>
+        <span class="nf">#orange</span> <span class="p">{</span>
+            <span class="nl">width</span><span class="p">:</span> <span class="m">300px</span><span class="p">;</span>
+            <span class="nl">height</span><span class="p">:</span> <span class="m">300px</span><span class="p">;</span>
+            <span class="nl">background-color</span><span class="p">:</span> <span class="no">orange</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="nf">#box</span> <span class="p">{</span>
+            <span class="nl">width</span><span class="p">:</span> <span class="m">150px</span><span class="p">;</span>
+            <span class="nl">height</span><span class="p">:</span> <span class="m">150px</span><span class="p">;</span>
+            <span class="nl">background-color</span><span class="p">:</span> <span class="no">yellow</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="nt">&lt;/style&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"orange"</span><span class="nt">&gt;&lt;/div&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"box"</span><span class="nt">&gt;&lt;/div&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+<p><img class="header-img" src="/assets/img/2019-2-3-1.png" alt="" /></p>
+
+<h3 id="2relative-相对定位">2.relative 相对定位</h3>
+<p>relative相对于它自身默认情况下的位置进行定位。什么意思呢?看下面</p>
+
+<p>给box加上相对定位</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;style&gt;</span>
+        <span class="nt">body</span> <span class="p">{</span>
+            <span class="nl">background-color</span><span class="p">:</span> <span class="no">gray</span>
+        <span class="p">}</span>
+        <span class="nf">#orange</span> <span class="p">{</span>
+            <span class="nl">width</span><span class="p">:</span> <span class="m">300px</span><span class="p">;</span>
+            <span class="nl">height</span><span class="p">:</span> <span class="m">300px</span><span class="p">;</span>
+            <span class="nl">background-color</span><span class="p">:</span> <span class="no">orange</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="nf">#box</span> <span class="p">{</span>
+            <span class="nl">width</span><span class="p">:</span> <span class="m">150px</span><span class="p">;</span>
+            <span class="nl">height</span><span class="p">:</span> <span class="m">150px</span><span class="p">;</span>
+            <span class="nl">background-color</span><span class="p">:</span> <span class="no">yellow</span><span class="p">;</span>
+            <span class="nl">position</span><span class="p">:</span> <span class="nb">relative</span><span class="p">;</span>
+            <span class="nl">left</span><span class="p">:</span> <span class="m">50px</span><span class="p">;</span>
+            <span class="nl">top</span><span class="p">:</span> <span class="m">50px</span>
+        <span class="p">}</span>
+    <span class="nt">&lt;/style&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"orange"</span><span class="nt">&gt;&lt;/div&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"box"</span><span class="nt">&gt;&lt;/div&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+<p><img class="header-img" src="/assets/img/2019-2-3-2.png" alt="" />
+box相对于它原来的位置left了50px,top了50px。原来的位置是没有设置position:relative时的box</p>
+
+<h3 id="3absolute-绝对定位">3.absolute 绝对定位</h3>
+<p>absoulute是相对于它的父元素,注意:是有定位的父元素来说的,排除父元素为position:static这种情况,如果父元素都没有定位，那么就是相对于body来定位。如下：</p>
+
+<p>1.父元素没有定位的情况</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;style&gt;</span>
+        <span class="nt">body</span> <span class="p">{</span>
+            <span class="nl">background-color</span><span class="p">:</span> <span class="no">gray</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="nf">#orange</span> <span class="p">{</span>
+            <span class="nl">width</span><span class="p">:</span> <span class="m">300px</span><span class="p">;</span>
+            <span class="nl">height</span><span class="p">:</span> <span class="m">300px</span><span class="p">;</span>
+            <span class="nl">background-color</span><span class="p">:</span> <span class="no">orange</span><span class="p">;</span>
+            <span class="nl">margin-left</span><span class="p">:</span> <span class="m">200px</span><span class="p">;</span>
+            <span class="nl">margin-top</span><span class="p">:</span> <span class="m">200px</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="nf">#box</span> <span class="p">{</span>
+            <span class="nl">width</span><span class="p">:</span> <span class="m">150px</span><span class="p">;</span>
+            <span class="nl">height</span><span class="p">:</span> <span class="m">150px</span><span class="p">;</span>
+            <span class="nl">background-color</span><span class="p">:</span> <span class="no">yellow</span><span class="p">;</span>
+            <span class="nl">position</span><span class="p">:</span> <span class="nb">absolute</span><span class="p">;</span>
+            <span class="nl">left</span><span class="p">:</span> <span class="m">50px</span><span class="p">;</span>
+            <span class="nl">top</span><span class="p">:</span> <span class="m">50px</span>
+        <span class="p">}</span>
+    <span class="nt">&lt;/style&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"orange"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"box"</span><span class="nt">&gt;&lt;/div&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+<p>box的父元素是orange,父元素没有定位,继续冒泡往上找,上面没有父元素了,就找body，这时候的box的定位是相对于body来定位的
+<img class="header-img" src="/assets/img/2019-2-3-3.png" alt="" /></p>
+
+<p>1.父元素有定位的情况</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;style&gt;</span>
+        <span class="nt">body</span> <span class="p">{</span>
+            <span class="nl">background-color</span><span class="p">:</span> <span class="no">gray</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="nf">#orange</span> <span class="p">{</span>
+            <span class="nl">width</span><span class="p">:</span> <span class="m">300px</span><span class="p">;</span>
+            <span class="nl">height</span><span class="p">:</span> <span class="m">300px</span><span class="p">;</span>
+            <span class="nl">background-color</span><span class="p">:</span> <span class="no">orange</span><span class="p">;</span>
+            <span class="nl">margin-left</span><span class="p">:</span> <span class="m">200px</span><span class="p">;</span>
+            <span class="nl">margin-top</span><span class="p">:</span> <span class="m">200px</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="nf">#box</span> <span class="p">{</span>
+            <span class="nl">width</span><span class="p">:</span> <span class="m">150px</span><span class="p">;</span>
+            <span class="nl">height</span><span class="p">:</span> <span class="m">150px</span><span class="p">;</span>
+            <span class="nl">background-color</span><span class="p">:</span> <span class="no">yellow</span><span class="p">;</span>
+            <span class="nl">position</span><span class="p">:</span> <span class="nb">absolute</span><span class="p">;</span>
+            <span class="nl">left</span><span class="p">:</span> <span class="m">50px</span><span class="p">;</span>
+            <span class="nl">top</span><span class="p">:</span> <span class="m">50px</span>
+        <span class="p">}</span>
+    <span class="nt">&lt;/style&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"orange"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"box"</span><span class="nt">&gt;&lt;/div&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+<p>box的父元素是orange有定位,这时候的box的定位是相对于orange来定位的
+<img class="header-img" src="/assets/img/2019-2-3-4.png" alt="" /></p>
+
+<h3 id="4fixed-固定定位">4.fixed 固定定位</h3>
+<p>fixed固定定位相对于浏览器窗口定位,不论滚动条拉动与否,不论其父元素是否设置定位,位置始终不变</p>
+
+
+    </article>
+    
+    <div class="social-share-wrapper">
+        <div class="social-share"></div>
+    </div>
+    
+</div>
+
+<section class="author-detail">
+    <section class="post-footer-item author-card">
+        <div class="avatar">
+            <img src="/assets/img/profile.jpg" alt="">
+        </div>
+        <div class="author-name" rel="author">孙佳磊</div>
+        <div class="bio">
+            <p>PHP开发者,热爱技术</p>
+        </div>
+        
+        <ul class="sns-links">
+            
+            <li>
+                <a href="//github.com/cainiaosunjialei" target="_blank">
+                    <i class="iconfont icon-github"></i>
+                </a>
+            </li>
+            
+        </ul>
+        
+    </section>
+    <section class="post-footer-item read-next">
+        
+        
+        <div class="read-next-item">
+            <a href="/2018/07/13/mysql_slow_query_log.html" class="read-next-link"></a>
+            <section>
+                <span>mysql慢查询日志</span>
+                <p>查看是否开启mysql慢查询日志mysql -u root -pshow variables like '%que...</p>
+            </section>
+            
+        </div>
+        
+    </section>
+    
+</section>
+
+<footer class="g-footer">
+    <section>孙佳磊的博客 © 2019</section>
+    <section>Powered by <a href="//jekyllrb.com">Jekyll</a> | <a href="https://github.com/kaeyleo/jekyll-theme-H2O">Theme H2O</a></section>
+</footer>
+
+<script src="/assets/js/social-share.min.js"></script>
+<script>
+    socialShare('.social-share', {
+        sites: ['wechat','weibo','douban','twitter'],
+        wechatQrcodeTitle: "分享到微信朋友圈",
+        wechatQrcodeHelper: '<p>扫码后点击右上角</p><p>将本文分享至朋友圈</p>'
+    });
+</script>
+<script>
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+//var d = document, s = d.createElement('script');
+/*写入自己的disqus信息*/
+//s.src = 'https://liaokeyu.disqus.com/embed.js';
+//s.setAttribute('data-timestamp', +new Date());
+//(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/js/prism.js"></script>
+<script src="/assets/js/index.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ubuntu16.04安装Nginx Mysql PHP - 孙佳磊的博客</title>
+    <meta name="author"  content="孙佳磊">
+    <meta name="description" content="Ubuntu16.04安装Nginx Mysql PHP">
+    <meta name="keywords"  content="linux, ubuntu">
+    <!-- Open Graph -->
+    <meta property="og:title" content="Ubuntu16.04安装Nginx Mysql PHP - 孙佳磊的博客">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="http://localhost:4000/2018/07/02/LNMP%E5%AE%89%E8%A3%85%E5%8F%8A%E9%85%8D%E7%BD%AE.html">
+    <meta property="og:description" content="一位PHP开发对技术的一点分享。">
+    <meta property="og:site_name" content="孙佳磊的博客">
+    <link rel="stylesheet" href="//cdn.staticfile.org/normalize/6.0.0/normalize.min.css">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_roc50gemkxpw4s4i.css">
+    <link rel="stylesheet" href="/assets/css/github-markdown.css">
+    <link rel="stylesheet" href="/assets/css/prism.css">
+    <link rel="stylesheet" href="/assets/css/share.min.css">
+    <link rel="stylesheet" href="/assets/css/app.min.css">
+    <link rel="stylesheet" href="/assets/css/common.css">
+</head>
+<body>
+    <!--[if lt IE 10]>
+<div class="alert-danger" role="alert">你的浏览器实在太太太旧了，放学别走，升级完浏览器再说！<a target="_blank" class="alert-link" href="http://browsehappy.com">立即升级</a></div>
+<![endif]-->
+<input id="nm-switch" type="hidden" value="false">
+
+<header class="g-header">
+    <div class="g-logo">
+      <a href="/"></a>
+    </div>
+    <i id="menu-toggle" class="iconfont icon-menu"></i>
+    <nav class="g-nav">
+        <ul>
+            
+            <li><a href="/">Home</a></li>
+            
+            <li><a href="/tags.html">Tags</a></li>
+            
+        </ul>
+    </nav>
+</header>
+
+
+<header class="g-banner post-header post-pattern-circuitBoard bgcolor-default post-no-cover" data-theme="default">
+    <div class="post-wrapper">
+        <div class="post-tags">
+            
+            
+            <a href="http://localhost:4000/tags.html#linux" class="post-tag">linux</a>
+            
+            <a href="http://localhost:4000/tags.html#ubuntu" class="post-tag">ubuntu</a>
+            
+            
+        </div>
+        <h1>Ubuntu16.04安装Nginx Mysql PHP</h1>
+        <div class="post-meta">
+            <span class="post-meta-item"><i class="iconfont icon-author"></i><a href="http://localhost:4000" target="_blank" rel="author">sunjialei</a></></span>
+            <time class="post-meta-item" datetime="2018-07-02"><i class="iconfont icon-date"></i>2018-07-02</time>
+        </div>
+    </div>
+    
+</header>
+
+<div class="post-content">
+    
+    <article class="markdown-body">
+        <div class="post-forward-message">本文章地址：http://localhost:4000/2018/07/02/LNMP%E5%AE%89%E8%A3%85%E5%8F%8A%E9%85%8D%E7%BD%AE.html 转载请注明出处</div>
+        <h4 id="安装php">安装php</h4>
+
+<pre><code class="language-linux">sudo apt-get install php
+</code></pre>
+
+<h4 id="安装mysql">安装mysql</h4>
+
+<pre><code class="language-mysql">sudo apt-get install mysql-server
+</code></pre>
+
+<h4 id="安装nginx">安装nginx</h4>
+
+<div class="language-nginx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">sudo</span> <span class="s">apt-get</span> <span class="s">install</span> <span class="s">nginx</span>
+</code></pre></div></div>
+
+<h4 id="再安装一些模块">再安装一些模块</h4>
+
+<pre><code class="language-linux">sudo apt-get install php-mysql php-curl php-gd
+</code></pre>
+
+<h4 id="配置nginx">配置nginx</h4>
+<div class="language-nginx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">cd</span> <span class="n">/etc/nginx/sites-available</span>
+
+<span class="s">sudo</span> <span class="s">vim</span> <span class="s">frontend_supply</span>
+</code></pre></div></div>
+
+<div class="language-nginx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">server</span> <span class="p">{</span>
+    <span class="kn">listen</span>      <span class="mi">80</span><span class="p">;</span>
+    <span class="kn">server_name</span> <span class="s">frontend.supply.com</span><span class="p">;</span>
+    <span class="kn">root</span>        <span class="n">/wwwroot/frontend_supply/public</span><span class="p">;</span>
+    <span class="kn">index</span>       <span class="s">index.php</span> <span class="s">index.html</span> <span class="s">index.htm</span><span class="p">;</span>
+    <span class="kn">charset</span>     <span class="s">utf-8</span><span class="p">;</span>
+
+    <span class="kn">location</span> <span class="n">/</span> <span class="p">{</span>
+        <span class="kn">try_files</span> <span class="nv">$uri</span> <span class="nv">$uri</span><span class="n">/</span> <span class="n">/index.php?_url=</span><span class="nv">$uri</span><span class="s">&amp;</span><span class="nv">$args</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kn">location</span> <span class="p">~</span> <span class="sr">\.php</span> <span class="p">{</span>
+       <span class="c1"># fastcgi_pass  unix:/run/php/php7.0-fpm.sock;
+</span>        <span class="kn">fastcgi_pass</span> <span class="nf">127.0.0.1</span><span class="p">:</span><span class="mi">9000</span><span class="p">;</span>
+        <span class="kn">fastcgi_index</span> <span class="n">/index.php</span><span class="p">;</span>
+
+        <span class="kn">include</span> <span class="s">fastcgi_params</span><span class="p">;</span>
+        <span class="kn">fastcgi_split_path_info</span>       <span class="s">^(.+</span><span class="err">\</span><span class="s">.php)(/.+)</span>$<span class="p">;</span>
+        <span class="kn">fastcgi_param</span> <span class="s">PATH_INFO</span>       <span class="nv">$fastcgi_path_info</span><span class="p">;</span>
+        <span class="kn">fastcgi_param</span> <span class="s">SCRIPT_FILENAME</span> <span class="nv">$document_root$fastcgi_script_name</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>fastcgi_pass默认采用socket的连接方式，这里我把它改成了tcp的连接方式,在/etc/php/7.0/fpm/pool.d/www.conf中添加listen = 127.0.0.1:9000,要注释掉socket的那种方式。</p>
+
+<p>另外,因为总配置文件中引入了sites-enabled这个文件下的配置文件,所有还需要建立软连接,进入</p>
+
+<pre><code class="language-linux">cd /etc/nginx/sites-enabled
+
+sudo ln -s ../sites-available/frontend_supply frontend_supply
+</code></pre>
+
+<h4 id="重启nginx-php-fpm">重启nginx php-fpm</h4>
+<div class="language-nginx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">sudo</span> <span class="s">service</span> <span class="s">nginx</span> <span class="s">restart</span>
+<span class="s">sudo</span> <span class="s">service</span> <span class="s">php7.0-fpm</span> <span class="s">restart</span>
+</code></pre></div></div>
+
+    </article>
+    
+    <div class="social-share-wrapper">
+        <div class="social-share"></div>
+    </div>
+    
+</div>
+
+<section class="author-detail">
+    <section class="post-footer-item author-card">
+        <div class="avatar">
+            <img src="/assets/img/profile.jpg" alt="">
+        </div>
+        <div class="author-name" rel="author">孙佳磊</div>
+        <div class="bio">
+            <p>PHP开发者,热爱技术</p>
+        </div>
+        
+        <ul class="sns-links">
+            
+            <li>
+                <a href="//github.com/cainiaosunjialei" target="_blank">
+                    <i class="iconfont icon-github"></i>
+                </a>
+            </li>
+            
+        </ul>
+        
+    </section>
+    <section class="post-footer-item read-next">
+        
+        <div class="read-next-item">
+            <a href="/2018/07/13/mysql_slow_query_log.html" class="read-next-link"></a>
+            <section>
+                <span>mysql慢查询日志</span>
+                <p>查看是否开启mysql慢查询日志mysql -u root -pshow variables like '%que...</p>
+            </section>
+            
+        </div>
+        
+        
+        <div class="read-next-item">
+            <a href="/2018/06/28/ubuntu16.04%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip.html" class="read-next-link"></a>
+            <section>
+                <span>Ubuntu16.04 设置静态IP</span>
+                <p>最近切换到linux环境下进行开发了,但由于电脑是win10,所以装了个虚拟机,通过xshell连接这台虚拟机,但...</p>
+            </section>
+            
+        </div>
+        
+    </section>
+    
+</section>
+
+<footer class="g-footer">
+    <section>孙佳磊的博客 © 2019</section>
+    <section>Powered by <a href="//jekyllrb.com">Jekyll</a> | <a href="https://github.com/kaeyleo/jekyll-theme-H2O">Theme H2O</a></section>
+</footer>
+
+<script src="/assets/js/social-share.min.js"></script>
+<script>
+    socialShare('.social-share', {
+        sites: ['wechat','weibo','douban','twitter'],
+        wechatQrcodeTitle: "分享到微信朋友圈",
+        wechatQrcodeHelper: '<p>扫码后点击右上角</p><p>将本文分享至朋友圈</p>'
+    });
+</script>
+<script>
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+//var d = document, s = d.createElement('script');
+/*写入自己的disqus信息*/
+//s.src = 'https://liaokeyu.disqus.com/embed.js';
+//s.setAttribute('data-timestamp', +new Date());
+//(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/js/prism.js"></script>
+<script src="/assets/js/index.min.js"></script>
+</body>
+</html>

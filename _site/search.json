@@ -1,6 +1,36 @@
 [
   
     {
+      "title"    : "CSS定位position",
+      "tags"     : "CSS",
+      "url"      : "/2019/02/03/css-position.html"
+    } ,
+  
+    {
+      "title"    : "mysql慢查询日志",
+      "tags"     : "linux ubuntu",
+      "url"      : "/2018/07/13/mysql_slow_query_log.html"
+    } ,
+  
+    {
+      "title"    : "Ubuntu16.04安装Nginx Mysql PHP",
+      "tags"     : "linux ubuntu",
+      "url"      : "/2018/07/02/LNMP%E5%AE%89%E8%A3%85%E5%8F%8A%E9%85%8D%E7%BD%AE.html"
+    } ,
+  
+    {
+      "title"    : "Ubuntu16.04 设置静态IP",
+      "tags"     : "linux ubuntu",
+      "url"      : "/2018/06/28/ubuntu16.04%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81ip.html"
+    } ,
+  
+    {
+      "title"    : "允许远程访问mysql,开启remote access",
+      "tags"     : "linux",
+      "url"      : "/2018/06/24/%E5%BC%80%E5%90%AFmysql-remote-access.html"
+    } ,
+  
+    {
       "title"    : "个人对于单例模式中类只能被实例化1次的理解",
       "tags"     : "php",
       "url"      : "/2018/06/20/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F.html"
