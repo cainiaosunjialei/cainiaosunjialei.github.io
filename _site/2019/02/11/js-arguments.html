@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript函数中的arguments - 孙佳磊的博客</title>
+    <meta name="author"  content="孙佳磊">
+    <meta name="description" content="JavaScript函数中的arguments">
+    <meta name="keywords"  content="Javascript">
+    <!-- Open Graph -->
+    <meta property="og:title" content="JavaScript函数中的arguments - 孙佳磊的博客">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="http://localhost:4000/2019/02/11/js-arguments.html">
+    <meta property="og:description" content="一位PHP开发对技术的一点分享。">
+    <meta property="og:site_name" content="孙佳磊的博客">
+    <link rel="stylesheet" href="//cdn.staticfile.org/normalize/6.0.0/normalize.min.css">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_roc50gemkxpw4s4i.css">
+    <link rel="stylesheet" href="/assets/css/github-markdown.css">
+    <link rel="stylesheet" href="/assets/css/prism.css">
+    <link rel="stylesheet" href="/assets/css/share.min.css">
+    <link rel="stylesheet" href="/assets/css/app.min.css">
+    <link rel="stylesheet" href="/assets/css/common.css">
+</head>
+<body>
+    <!--[if lt IE 10]>
+<div class="alert-danger" role="alert">你的浏览器实在太太太旧了，放学别走，升级完浏览器再说！<a target="_blank" class="alert-link" href="http://browsehappy.com">立即升级</a></div>
+<![endif]-->
+<input id="nm-switch" type="hidden" value="false">
+
+<header class="g-header">
+    <div class="g-logo">
+      <a href="/"></a>
+    </div>
+    <i id="menu-toggle" class="iconfont icon-menu"></i>
+    <nav class="g-nav">
+        <ul>
+            
+            <li><a href="/">Home</a></li>
+            
+            <li><a href="/tags.html">Tags</a></li>
+            
+        </ul>
+    </nav>
+</header>
+
+
+<header class="g-banner post-header post-pattern-circuitBoard bgcolor-default post-no-cover" data-theme="default">
+    <div class="post-wrapper">
+        <div class="post-tags">
+            
+            
+            <a href="http://localhost:4000/tags.html#Javascript" class="post-tag">Javascript</a>
+            
+            
+        </div>
+        <h1>JavaScript函数中的arguments</h1>
+        <div class="post-meta">
+            <span class="post-meta-item"><i class="iconfont icon-author"></i><a href="http://localhost:4000" target="_blank" rel="author">sunjialei</a></></span>
+            <time class="post-meta-item" datetime="2019-02-11"><i class="iconfont icon-date"></i>2019-02-11</time>
+        </div>
+    </div>
+    
+</header>
+
+<div class="post-content">
+    
+    <article class="markdown-body">
+        <div class="post-forward-message">本文章地址：http://localhost:4000/2019/02/11/js-arguments.html 转载请注明出处</div>
+        <p>记录一下以前没注意的一个知识点</p>
+
+<p>在JavaScript中给函数传递参数，函数是以数组的形式接收参数的，所以不管给函数传多少个参数，函数都是可以接受的。在函数中获取参数可以使用arguments对象以数组的形式获取。</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">add</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="kr">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1">//10</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="kr">arguments</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>  <span class="c1">//20</span>
+<span class="p">}</span>
+
+<span class="nx">add</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">add</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="kr">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1">//10</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="kr">arguments</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>  <span class="c1">//undefined</span>
+<span class="p">}</span>
+
+<span class="nx">add</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">add</span><span class="p">(</span><span class="nx">num1</span><span class="p">,</span> <span class="nx">num2</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="kr">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1">//10</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">num1</span><span class="p">)</span>  <span class="c1">//10</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="kr">arguments</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>  <span class="c1">//20</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">num2</span><span class="p">)</span>  <span class="c1">//20</span>
+<span class="p">}</span>
+
+<span class="nx">add</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">add</span><span class="p">(</span><span class="nx">num1</span><span class="p">,</span> <span class="nx">num2</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="kr">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1">//10</span>
+    <span class="kr">arguments</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">30</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="kr">arguments</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>  <span class="c1">//30</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">num2</span><span class="p">)</span>  <span class="c1">//30</span>
+<span class="p">}</span>
+
+<span class="nx">add</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>在严格模式下：</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s2">"use strict"</span>
+<span class="kd">function</span> <span class="nx">add</span><span class="p">(</span><span class="nx">num1</span><span class="p">,</span> <span class="nx">num2</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="kr">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1">//10</span>
+    <span class="kr">arguments</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">30</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="kr">arguments</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>  <span class="c1">//30</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">num2</span><span class="p">)</span>  <span class="c1">//20</span>
+<span class="p">}</span>
+
+<span class="nx">add</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+</code></pre></div></div>
+
+
+    </article>
+    
+    <div class="social-share-wrapper">
+        <div class="social-share"></div>
+    </div>
+    
+</div>
+
+<section class="author-detail">
+    <section class="post-footer-item author-card">
+        <div class="avatar">
+            <img src="/assets/img/profile.jpg" alt="">
+        </div>
+        <div class="author-name" rel="author">孙佳磊</div>
+        <div class="bio">
+            <p>PHP开发者,热爱技术</p>
+        </div>
+        
+        <ul class="sns-links">
+            
+            <li>
+                <a href="//github.com/cainiaosunjialei" target="_blank">
+                    <i class="iconfont icon-github"></i>
+                </a>
+            </li>
+            
+        </ul>
+        
+    </section>
+    <section class="post-footer-item read-next">
+        
+        
+        <div class="read-next-item">
+            <a href="/2019/02/03/css-position.html" class="read-next-link"></a>
+            <section>
+                <span>CSS定位position</span>
+                <p>最近在学习原生JavaScript,有个练手的小demo,放大镜的功能。做的过程中遇到一些跟CSS定位有关的知识,...</p>
+            </section>
+            
+        </div>
+        
+    </section>
+    
+</section>
+
+<footer class="g-footer">
+    <section>孙佳磊的博客 © 2019</section>
+    <section>Powered by <a href="//jekyllrb.com">Jekyll</a> | <a href="https://github.com/kaeyleo/jekyll-theme-H2O">Theme H2O</a></section>
+</footer>
+
+<script src="/assets/js/social-share.min.js"></script>
+<script>
+    socialShare('.social-share', {
+        sites: ['wechat','weibo','douban','twitter'],
+        wechatQrcodeTitle: "分享到微信朋友圈",
+        wechatQrcodeHelper: '<p>扫码后点击右上角</p><p>将本文分享至朋友圈</p>'
+    });
+</script>
+<script>
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+//var d = document, s = d.createElement('script');
+/*写入自己的disqus信息*/
+//s.src = 'https://liaokeyu.disqus.com/embed.js';
+//s.setAttribute('data-timestamp', +new Date());
+//(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/js/prism.js"></script>
+<script src="/assets/js/index.min.js"></script>
+</body>
+</html>
