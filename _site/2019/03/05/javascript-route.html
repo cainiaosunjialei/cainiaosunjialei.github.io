@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>简述为什么在Vue中当路由模式为history的时候刷新页面会404 - 孙佳磊的博客</title>
+    <meta name="author"  content="孙佳磊">
+    <meta name="description" content="简述为什么在Vue中当路由模式为history的时候刷新页面会404">
+    <meta name="keywords"  content="Javascript">
+    <!-- Open Graph -->
+    <meta property="og:title" content="简述为什么在Vue中当路由模式为history的时候刷新页面会404 - 孙佳磊的博客">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="http://localhost:4000/2019/03/05/javascript-route.html">
+    <meta property="og:description" content="一位PHP开发对技术的一点分享。">
+    <meta property="og:site_name" content="孙佳磊的博客">
+    <link rel="stylesheet" href="//cdn.staticfile.org/normalize/6.0.0/normalize.min.css">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_roc50gemkxpw4s4i.css">
+    <link rel="stylesheet" href="/assets/css/github-markdown.css">
+    <link rel="stylesheet" href="/assets/css/prism.css">
+    <link rel="stylesheet" href="/assets/css/share.min.css">
+    <link rel="stylesheet" href="/assets/css/app.min.css">
+    <link rel="stylesheet" href="/assets/css/common.css">
+</head>
+<body>
+    <!--[if lt IE 10]>
+<div class="alert-danger" role="alert">你的浏览器实在太太太旧了，放学别走，升级完浏览器再说！<a target="_blank" class="alert-link" href="http://browsehappy.com">立即升级</a></div>
+<![endif]-->
+<input id="nm-switch" type="hidden" value="false">
+
+<header class="g-header">
+    <div class="g-logo">
+      <a href="/"></a>
+    </div>
+    <i id="menu-toggle" class="iconfont icon-menu"></i>
+    <nav class="g-nav">
+        <ul>
+            
+            <li><a href="/">Home</a></li>
+            
+            <li><a href="/tags.html">Tags</a></li>
+            
+        </ul>
+    </nav>
+</header>
+
+
+<header class="g-banner post-header post-pattern-circuitBoard bgcolor-pink post-no-cover" data-theme="pink">
+    <div class="post-wrapper">
+        <div class="post-tags">
+            
+            
+            <a href="http://localhost:4000/tags.html#Javascript" class="post-tag">Javascript</a>
+            
+            
+        </div>
+        <h1>简述为什么在Vue中当路由模式为history的时候刷新页面会404</h1>
+        <div class="post-meta">
+            <span class="post-meta-item"><i class="iconfont icon-author"></i><a href="http://localhost:4000" target="_blank" rel="author">sunjialei</a></></span>
+            <time class="post-meta-item" datetime="2019-03-05"><i class="iconfont icon-date"></i>2019-03-05</time>
+        </div>
+    </div>
+    
+</header>
+
+<div class="post-content">
+    
+    <article class="markdown-body">
+        <div class="post-forward-message">本文章地址：http://localhost:4000/2019/03/05/javascript-route.html 转载请注明出处</div>
+        <p>上周五遇到个问题,vue的路由为history模式,当在正式环境的时候刷新页面会出现404 Not Found的情况。于是查了相关资料算是搞明白了，顺便记录下。</p>
+
+<p>vue-router的路由有2种模式：1.hash 2.history,</p>
+
+<p>如：</p>
+
+<p>hash模式：http://localhost:3000/#/user/123</p>
+
+<p>history模式：http://localhost:3000/user/123</p>
+
+<p>不管在浏览器中url输入的是什么，都会先根据这个url去请求服务器。为什么vue叫单页面，是因为请求服务器的时候不管请求的地址是什么,永远只返回同一个页面，默认index.html。但你可能会问url地址不是不同吗,为什么返回的页面都是同一个index.html。</p>
+
+<p>hash模式请求服务器的时候#号和#号后面部分不会携带着，及hash模式下请求服务器的时候,请求的地址永远都是http://localhost:3000/,history模式下若后端不进行配置,在vue页面中通过按钮之类的跳转是没什么问题的，但刷新页面的时候会出现404,是因为浏览器通过url去请求后端的时候请求的地址是http://localhost:3000/user/123,但后端并没有这个路由,找不到对应的路由，所以报404,这个时候就需要后端进行相关配置,把请求指向http://localhost:3000/。这时候返回的页面又都是index.html了，index.html中加载了很多js文件,到这一步之后，前端路由就起作用了,vue-router会捕捉浏览器地址中的/user/123,然后找到这个前端路由,渲染相应的页面。</p>
+
+
+    </article>
+    
+    <div class="social-share-wrapper">
+        <div class="social-share"></div>
+    </div>
+    
+</div>
+
+<section class="author-detail">
+    <section class="post-footer-item author-card">
+        <div class="avatar">
+            <img src="/assets/img/profile.jpg" alt="">
+        </div>
+        <div class="author-name" rel="author">孙佳磊</div>
+        <div class="bio">
+            <p>PHP开发者,热爱技术</p>
+        </div>
+        
+        <ul class="sns-links">
+            
+            <li>
+                <a href="//github.com/cainiaosunjialei" target="_blank">
+                    <i class="iconfont icon-github"></i>
+                </a>
+            </li>
+            
+        </ul>
+        
+    </section>
+    <section class="post-footer-item read-next">
+        
+        
+        <div class="read-next-item">
+            <a href="/2019/02/20/javascript.html" class="read-next-link"></a>
+            <section>
+                <span>JavaScript之作用域链与闭包</span>
+                <p>什么是闭包? 《JavaScript高级程序设计(第3版)》中这么定义闭包：闭包是有权访问另一个函数作用域中的变量...</p>
+            </section>
+            
+        </div>
+        
+    </section>
+    
+</section>
+
+<footer class="g-footer">
+    <section>孙佳磊的博客 © 2019</section>
+    <section>Powered by <a href="//jekyllrb.com">Jekyll</a> | <a href="https://github.com/kaeyleo/jekyll-theme-H2O">Theme H2O</a></section>
+</footer>
+
+<script src="/assets/js/social-share.min.js"></script>
+<script>
+    socialShare('.social-share', {
+        sites: ['wechat','weibo','douban','twitter'],
+        wechatQrcodeTitle: "分享到微信朋友圈",
+        wechatQrcodeHelper: '<p>扫码后点击右上角</p><p>将本文分享至朋友圈</p>'
+    });
+</script>
+<script>
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+//var d = document, s = d.createElement('script');
+/*写入自己的disqus信息*/
+//s.src = 'https://liaokeyu.disqus.com/embed.js';
+//s.setAttribute('data-timestamp', +new Date());
+//(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/js/prism.js"></script>
+<script src="/assets/js/index.min.js"></script>
+</body>
+</html>

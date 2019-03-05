@@ -1,6 +1,12 @@
 [
   
     {
+      "title"    : "简述为什么在Vue中当路由模式为history的时候刷新页面会404",
+      "tags"     : "Javascript",
+      "url"      : "/2019/03/05/javascript-route.html"
+    } ,
+  
+    {
       "title"    : "JavaScript之作用域链与闭包",
       "tags"     : "Javascript",
       "url"      : "/2019/02/20/javascript.html"
