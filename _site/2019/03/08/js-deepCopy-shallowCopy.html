@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS深拷贝与浅拷贝 - 孙佳磊的博客</title>
+    <meta name="author"  content="孙佳磊">
+    <meta name="description" content="JS深拷贝与浅拷贝">
+    <meta name="keywords"  content="Javascript">
+    <!-- Open Graph -->
+    <meta property="og:title" content="JS深拷贝与浅拷贝 - 孙佳磊的博客">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="http://localhost:4000/2019/03/08/js-deepCopy-shallowCopy.html">
+    <meta property="og:description" content="一位PHP开发对技术的一点分享。">
+    <meta property="og:site_name" content="孙佳磊的博客">
+    <link rel="stylesheet" href="//cdn.staticfile.org/normalize/6.0.0/normalize.min.css">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_roc50gemkxpw4s4i.css">
+    <link rel="stylesheet" href="/assets/css/github-markdown.css">
+    <link rel="stylesheet" href="/assets/css/prism.css">
+    <link rel="stylesheet" href="/assets/css/share.min.css">
+    <link rel="stylesheet" href="/assets/css/app.min.css">
+    <link rel="stylesheet" href="/assets/css/common.css">
+</head>
+<body>
+    <!--[if lt IE 10]>
+<div class="alert-danger" role="alert">你的浏览器实在太太太旧了，放学别走，升级完浏览器再说！<a target="_blank" class="alert-link" href="http://browsehappy.com">立即升级</a></div>
+<![endif]-->
+<input id="nm-switch" type="hidden" value="false">
+
+<header class="g-header">
+    <div class="g-logo">
+      <a href="/"></a>
+    </div>
+    <i id="menu-toggle" class="iconfont icon-menu"></i>
+    <nav class="g-nav">
+        <ul>
+            
+            <li><a href="/">Home</a></li>
+            
+            <li><a href="/tags.html">Tags</a></li>
+            
+        </ul>
+    </nav>
+</header>
+
+
+<header class="g-banner post-header post-pattern-circuitBoard bgcolor-pink post-no-cover" data-theme="pink">
+    <div class="post-wrapper">
+        <div class="post-tags">
+            
+            
+            <a href="http://localhost:4000/tags.html#Javascript" class="post-tag">Javascript</a>
+            
+            
+        </div>
+        <h1>JS深拷贝与浅拷贝</h1>
+        <div class="post-meta">
+            <span class="post-meta-item"><i class="iconfont icon-author"></i><a href="http://localhost:4000" target="_blank" rel="author">sunjialei</a></></span>
+            <time class="post-meta-item" datetime="2019-03-08"><i class="iconfont icon-date"></i>2019-03-08</time>
+        </div>
+    </div>
+    
+</header>
+
+<div class="post-content">
+    
+    <article class="markdown-body">
+        <div class="post-forward-message">本文章地址：http://localhost:4000/2019/03/08/js-deepCopy-shallowCopy.html 转载请注明出处</div>
+        <p>JS中数据类型有两大类：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>简单数据类型：number,string,bool,null,undefined,symbol
+
+复杂数据类型：object,function,array
+</code></pre></div></div>
+
+<p>只有复杂数据类型才有深拷贝浅拷贝的说法。</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="kd">let</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">a</span>
+<span class="nx">b</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="c1">//1</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">b</span><span class="p">)</span> <span class="c1">//2</span>
+</code></pre></div></div>
+<p>简单数据类型把变量a赋值给了变量b,其实是在栈内存中重新开辟了一块空间用来存储变量b以及b的值。a和b所在的两块栈内存是互不影响的,修改b的值并不会影响a的值。</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">name</span><span class="p">:</span> <span class="s1">'张三'</span><span class="p">,</span>
+    <span class="na">age</span><span class="p">:</span> <span class="mi">18</span>
+<span class="p">}</span>
+<span class="kd">let</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">a</span>
+<span class="nx">b</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s1">'李四'</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="c1">//{name: "李四", age: 18}</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">b</span><span class="p">)</span> <span class="c1">//{name: "李四", age: 18}</span>
+</code></pre></div></div>
+<p>复杂数据类型栈内存中存放的是变量名a以及变量a的值的引用,这个引用指向堆内存,堆内存中存储的才是变量a的值,栈内存中存的是变量a的值的引用。把变量a赋值给了变量b,其实是在栈内存中把变量a的引用给了变量b,此时变量a和变量b的引用都指向同一个堆内存。改变其中一个的值另外个的值也会跟着改变。这其实就是浅拷贝</p>
+
+<h3 id="浅拷贝就是各自的引用都指向同一块堆内存相互影响深拷贝就是各自的引用指向各自的堆内存双方互不影响">浅拷贝就是各自的引用都指向同一块堆内存,相互影响。深拷贝就是各自的引用指向各自的堆内存,双方互不影响</h3>
+
+<h3 id="如何实现深拷贝">如何实现深拷贝？</h3>
+<p>1.通过Json对象stringify和parse</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">name</span><span class="p">:</span> <span class="s1">'张三'</span><span class="p">,</span>
+    <span class="na">age</span><span class="p">:</span> <span class="mi">18</span>
+<span class="p">}</span>
+<span class="kd">let</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">a</span><span class="p">))</span>
+<span class="nx">b</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s1">'李四'</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="c1">//{name: "张三", age: 18}</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">b</span><span class="p">)</span> <span class="c1">//{name: "李四", age: 18}</span>
+</code></pre></div></div>
+
+<p>2.ES6的Object.assign()</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">name</span><span class="p">:</span> <span class="s1">'张三'</span><span class="p">,</span>
+    <span class="na">age</span><span class="p">:</span> <span class="mi">18</span>
+<span class="p">}</span>
+<span class="kd">let</span> <span class="nx">b</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">assign</span><span class="p">({},</span> <span class="nx">a</span><span class="p">)</span>
+<span class="nx">b</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s1">'李四'</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="c1">//{name: "张三", age: 18}</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">b</span><span class="p">)</span> <span class="c1">//{name: "李四", age: 18}</span>
+</code></pre></div></div>
+
+<p>3.递归(下面的一段代码我是从掘金社区别人那拿过来的)</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">deepCopy</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 创建一个新对象</span>
+    <span class="kd">let</span> <span class="nx">result</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="kd">let</span> <span class="nx">keys</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">obj</span><span class="p">),</span>
+        <span class="nx">key</span> <span class="o">=</span> <span class="kc">null</span><span class="p">,</span>
+        <span class="nx">temp</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">keys</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">key</span> <span class="o">=</span> <span class="nx">keys</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>    
+        <span class="nx">temp</span> <span class="o">=</span> <span class="nx">obj</span><span class="p">[</span><span class="nx">key</span><span class="p">];</span>
+        <span class="c1">// 如果字段的值也是一个对象则递归操作</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">temp</span> <span class="o">&amp;&amp;</span> <span class="k">typeof</span> <span class="nx">temp</span> <span class="o">===</span> <span class="s1">'object'</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">result</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">deepCopy</span><span class="p">(</span><span class="nx">temp</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="c1">// 否则直接赋值给新对象</span>
+            <span class="nx">result</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">temp</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">result</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">obj1</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">x</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">m</span><span class="p">:</span> <span class="mi">1</span>
+    <span class="p">},</span>
+    <span class="na">y</span><span class="p">:</span> <span class="kc">undefined</span><span class="p">,</span>
+    <span class="na">z</span><span class="p">:</span> <span class="kd">function</span> <span class="nx">add</span><span class="p">(</span><span class="nx">z1</span><span class="p">,</span> <span class="nx">z2</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">z1</span> <span class="o">+</span> <span class="nx">z2</span>
+    <span class="p">},</span>
+    <span class="na">a</span><span class="p">:</span> <span class="nb">Symbol</span><span class="p">(</span><span class="s2">"foo"</span><span class="p">)</span>
+<span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">obj2</span> <span class="o">=</span> <span class="nx">deepCopy</span><span class="p">(</span><span class="nx">obj1</span><span class="p">);</span>
+<span class="nx">obj2</span><span class="p">.</span><span class="nx">x</span><span class="p">.</span><span class="nx">m</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj1</span><span class="p">);</span> <span class="c1">//{x: {m: 1}, y: undefined, z: ƒ, a: Symbol(foo)}</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj2</span><span class="p">);</span> <span class="c1">//{x: {m: 2}, y: undefined, z: ƒ, a: Symbol(foo)}</span>
+</code></pre></div></div>
+
+<h3 id="注意objectassign对于源对象某个属性的值是对象那么目标对象拷贝得到的是这个对象的引用看下面">注意：Object.assign()对于源对象某个属性的值是对象，那么目标对象拷贝得到的是这个对象的引用，看下面</h3>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">name</span><span class="p">:</span> <span class="s1">'张三'</span><span class="p">,</span>
+    <span class="na">foo</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">x</span><span class="p">:</span> <span class="mi">1</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="kd">let</span> <span class="nx">b</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">assign</span><span class="p">({},</span> <span class="nx">a</span><span class="p">)</span>
+<span class="nx">b</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s1">'李四'</span>
+<span class="nx">b</span><span class="p">.</span><span class="nx">foo</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="c1">//{name: "张三", foo: {x: 2}}</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">b</span><span class="p">)</span> <span class="c1">//{name: "李四", foo: {x: 2}}</span>
+</code></pre></div></div>
+<p>所以Object.assign()对于一维对象是深拷贝,对于二维对象是浅拷贝</p>
+
+
+    </article>
+    
+    <div class="social-share-wrapper">
+        <div class="social-share"></div>
+    </div>
+    
+</div>
+
+<section class="author-detail">
+    <section class="post-footer-item author-card">
+        <div class="avatar">
+            <img src="/assets/img/profile.jpg" alt="">
+        </div>
+        <div class="author-name" rel="author">孙佳磊</div>
+        <div class="bio">
+            <p>PHP开发者,热爱技术</p>
+        </div>
+        
+        <ul class="sns-links">
+            
+            <li>
+                <a href="//github.com/cainiaosunjialei" target="_blank">
+                    <i class="iconfont icon-github"></i>
+                </a>
+            </li>
+            
+        </ul>
+        
+    </section>
+    <section class="post-footer-item read-next">
+        
+        
+        <div class="read-next-item">
+            <a href="/2019/03/05/javascript-route.html" class="read-next-link"></a>
+            <section>
+                <span>简述为什么在Vue中当路由模式为history的时候刷新页面会404</span>
+                <p>上周五遇到个问题,vue的路由为history模式,当在正式环境的时候刷新页面会出现404 Not Found的情...</p>
+            </section>
+            
+        </div>
+        
+    </section>
+    
+</section>
+
+<footer class="g-footer">
+    <section>孙佳磊的博客 © 2019</section>
+    <section>Powered by <a href="//jekyllrb.com">Jekyll</a> | <a href="https://github.com/kaeyleo/jekyll-theme-H2O">Theme H2O</a></section>
+</footer>
+
+<script src="/assets/js/social-share.min.js"></script>
+<script>
+    socialShare('.social-share', {
+        sites: ['wechat','weibo','douban','twitter'],
+        wechatQrcodeTitle: "分享到微信朋友圈",
+        wechatQrcodeHelper: '<p>扫码后点击右上角</p><p>将本文分享至朋友圈</p>'
+    });
+</script>
+<script>
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+//var d = document, s = d.createElement('script');
+/*写入自己的disqus信息*/
+//s.src = 'https://liaokeyu.disqus.com/embed.js';
+//s.setAttribute('data-timestamp', +new Date());
+//(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/js/prism.js"></script>
+<script src="/assets/js/index.min.js"></script>
+</body>
+</html>
