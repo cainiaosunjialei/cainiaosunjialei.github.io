@@ -44,7 +44,7 @@
 </header>
 
 
-<header class="g-banner post-header post-pattern-circuitBoard bgcolor-pink post-no-cover" data-theme="pink">
+<header class="g-banner post-header post-pattern-circuitBoard bgcolor-default post-no-cover" data-theme="default">
     <div class="post-wrapper">
         <div class="post-tags">
             
@@ -85,11 +85,11 @@
 <p>简单数据类型把变量a赋值给了变量b,其实是在栈内存中重新开辟了一块空间用来存储变量b以及b的值。a和b所在的两块栈内存是互不影响的,修改b的值并不会影响a的值。</p>
 
 <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="na">name</span><span class="p">:</span> <span class="s1">'张三'</span><span class="p">,</span>
+    <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">张三</span><span class="dl">'</span><span class="p">,</span>
     <span class="na">age</span><span class="p">:</span> <span class="mi">18</span>
 <span class="p">}</span>
 <span class="kd">let</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">a</span>
-<span class="nx">b</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s1">'李四'</span>
+<span class="nx">b</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">李四</span><span class="dl">'</span>
 
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="c1">//{name: "李四", age: 18}</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">b</span><span class="p">)</span> <span class="c1">//{name: "李四", age: 18}</span>
@@ -101,11 +101,11 @@
 <h3 id="如何实现深拷贝">如何实现深拷贝？</h3>
 <p>1.通过Json对象stringify和parse</p>
 <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="na">name</span><span class="p">:</span> <span class="s1">'张三'</span><span class="p">,</span>
+    <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">张三</span><span class="dl">'</span><span class="p">,</span>
     <span class="na">age</span><span class="p">:</span> <span class="mi">18</span>
 <span class="p">}</span>
 <span class="kd">let</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">a</span><span class="p">))</span>
-<span class="nx">b</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s1">'李四'</span>
+<span class="nx">b</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">李四</span><span class="dl">'</span>
 
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="c1">//{name: "张三", age: 18}</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">b</span><span class="p">)</span> <span class="c1">//{name: "李四", age: 18}</span>
@@ -113,11 +113,11 @@
 
 <p>2.ES6的Object.assign()</p>
 <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="na">name</span><span class="p">:</span> <span class="s1">'张三'</span><span class="p">,</span>
+    <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">张三</span><span class="dl">'</span><span class="p">,</span>
     <span class="na">age</span><span class="p">:</span> <span class="mi">18</span>
 <span class="p">}</span>
 <span class="kd">let</span> <span class="nx">b</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">assign</span><span class="p">({},</span> <span class="nx">a</span><span class="p">)</span>
-<span class="nx">b</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s1">'李四'</span>
+<span class="nx">b</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">李四</span><span class="dl">'</span>
 
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="c1">//{name: "张三", age: 18}</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">b</span><span class="p">)</span> <span class="c1">//{name: "李四", age: 18}</span>
@@ -135,7 +135,7 @@
         <span class="nx">key</span> <span class="o">=</span> <span class="nx">keys</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>    
         <span class="nx">temp</span> <span class="o">=</span> <span class="nx">obj</span><span class="p">[</span><span class="nx">key</span><span class="p">];</span>
         <span class="c1">// 如果字段的值也是一个对象则递归操作</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nx">temp</span> <span class="o">&amp;&amp;</span> <span class="k">typeof</span> <span class="nx">temp</span> <span class="o">===</span> <span class="s1">'object'</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">temp</span> <span class="o">&amp;&amp;</span> <span class="k">typeof</span> <span class="nx">temp</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">object</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
             <span class="nx">result</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">deepCopy</span><span class="p">(</span><span class="nx">temp</span><span class="p">);</span>
         <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
         <span class="c1">// 否则直接赋值给新对象</span>
@@ -153,7 +153,7 @@
     <span class="na">z</span><span class="p">:</span> <span class="kd">function</span> <span class="nx">add</span><span class="p">(</span><span class="nx">z1</span><span class="p">,</span> <span class="nx">z2</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">return</span> <span class="nx">z1</span> <span class="o">+</span> <span class="nx">z2</span>
     <span class="p">},</span>
-    <span class="na">a</span><span class="p">:</span> <span class="nb">Symbol</span><span class="p">(</span><span class="s2">"foo"</span><span class="p">)</span>
+    <span class="na">a</span><span class="p">:</span> <span class="nb">Symbol</span><span class="p">(</span><span class="dl">"</span><span class="s2">foo</span><span class="dl">"</span><span class="p">)</span>
 <span class="p">};</span>
 
 <span class="kd">var</span> <span class="nx">obj2</span> <span class="o">=</span> <span class="nx">deepCopy</span><span class="p">(</span><span class="nx">obj1</span><span class="p">);</span>
@@ -165,13 +165,13 @@
 
 <h3 id="注意objectassign对于源对象某个属性的值是对象那么目标对象拷贝得到的是这个对象的引用看下面">注意：Object.assign()对于源对象某个属性的值是对象，那么目标对象拷贝得到的是这个对象的引用，看下面</h3>
 <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="na">name</span><span class="p">:</span> <span class="s1">'张三'</span><span class="p">,</span>
+    <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">张三</span><span class="dl">'</span><span class="p">,</span>
     <span class="na">foo</span><span class="p">:</span> <span class="p">{</span>
         <span class="na">x</span><span class="p">:</span> <span class="mi">1</span>
     <span class="p">}</span>
 <span class="p">}</span>
 <span class="kd">let</span> <span class="nx">b</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">assign</span><span class="p">({},</span> <span class="nx">a</span><span class="p">)</span>
-<span class="nx">b</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s1">'李四'</span>
+<span class="nx">b</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">李四</span><span class="dl">'</span>
 <span class="nx">b</span><span class="p">.</span><span class="nx">foo</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="mi">2</span>
 
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="c1">//{name: "张三", foo: {x: 2}}</span>
@@ -195,7 +195,7 @@
         </div>
         <div class="author-name" rel="author">孙佳磊</div>
         <div class="bio">
-            <p>PHP开发者,热爱技术</p>
+            <p>WEB开发者,热爱技术</p>
         </div>
         
         <ul class="sns-links">
@@ -210,6 +210,15 @@
         
     </section>
     <section class="post-footer-item read-next">
+        
+        <div class="read-next-item">
+            <a href="/2019/09/27/vue%E6%B7%B1%E5%BA%A6%E7%9B%91%E5%90%AC.html" class="read-next-link"></a>
+            <section>
+                <span>Vue深度监听</span>
+                <p>遇到个需求: 所有的input输入框中都有值时,按钮才可点击,否则置灰。所有的input框中的值都在form对象中...</p>
+            </section>
+            
+        </div>
         
         
         <div class="read-next-item">

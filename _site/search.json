@@ -1,6 +1,12 @@
 [
   
     {
+      "title"    : "Vue深度监听",
+      "tags"     : "Vue",
+      "url"      : "/2019/09/27/vue%E6%B7%B1%E5%BA%A6%E7%9B%91%E5%90%AC.html"
+    } ,
+  
+    {
       "title"    : "JS深拷贝与浅拷贝",
       "tags"     : "Javascript",
       "url"      : "/2019/03/08/js-deep-shallow-copy.html"

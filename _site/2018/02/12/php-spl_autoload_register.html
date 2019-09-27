@@ -44,7 +44,7 @@
 </header>
 
 
-<header class="g-banner post-header post-pattern-circuitBoard bgcolor-pink post-no-cover" data-theme="pink">
+<header class="g-banner post-header post-pattern-circuitBoard bgcolor-default post-no-cover" data-theme="default">
     <div class="post-wrapper">
         <div class="post-tags">
             
@@ -82,7 +82,7 @@
 
 <p>Autoloader.php</p>
 <div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
-	<span class="k">namespace</span> <span class="nx">test</span><span class="p">;</span>
+	<span class="kn">namespace</span> <span class="nn">test</span><span class="p">;</span>
 
 	<span class="nb">spl_autoload_register</span><span class="p">(</span><span class="k">function</span><span class="p">(</span><span class="nv">$className</span><span class="p">)</span> <span class="p">{</span>
 		<span class="nv">$className</span> <span class="o">=</span> <span class="nb">str_replace</span><span class="p">(</span><span class="s1">'\\'</span><span class="p">,</span> <span class="nx">DIRECTORY_SEPARATOR</span><span class="p">,</span> <span class="nv">$className</span><span class="p">);</span>
@@ -98,9 +98,9 @@
 
 <p>MyTool.php</p>
 <div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
-	<span class="k">namespace</span> <span class="nx">test\src\tools</span><span class="p">;</span>
+	<span class="kn">namespace</span> <span class="nn">test\src\tools</span><span class="p">;</span>
 
-	<span class="k">class</span> <span class="nc">MyTool</span> <span class="p">{</span>
+	<span class="kd">class</span> <span class="nc">MyTool</span> <span class="p">{</span>
 
 		<span class="k">public</span> <span class="k">function</span> <span class="nf">__construct</span><span class="p">()</span> <span class="p">{</span>
 			<span class="k">echo</span> <span class="s1">'mytool'</span><span class="p">;</span>
@@ -110,11 +110,11 @@
 
 <p>index.php</p>
 <div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
-	<span class="k">namespace</span> <span class="nx">test</span><span class="p">;</span>
+	<span class="kn">namespace</span> <span class="nn">test</span><span class="p">;</span>
 
 	<span class="k">include</span> <span class="s1">'Autoloader.php'</span><span class="p">;</span>
 
-	<span class="k">class</span> <span class="nc">A</span> <span class="p">{</span>
+	<span class="kd">class</span> <span class="nc">A</span> <span class="p">{</span>
 
 		<span class="k">public</span> <span class="k">function</span> <span class="nf">__construct</span> <span class="p">()</span> <span class="p">{</span>
 			<span class="k">echo</span> <span class="s1">'怎么能'</span><span class="p">;</span>
@@ -173,7 +173,7 @@
         </div>
         <div class="author-name" rel="author">孙佳磊</div>
         <div class="bio">
-            <p>PHP开发者,热爱技术</p>
+            <p>WEB开发者,热爱技术</p>
         </div>
         
         <ul class="sns-links">

@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>个人对于单例模式中类只能被实例化1次的理解 - 孙佳磊的博客</title>
+    <title>Vue深度监听 - 孙佳磊的博客</title>
     <meta name="author"  content="孙佳磊">
-    <meta name="description" content="个人对于单例模式中类只能被实例化1次的理解">
-    <meta name="keywords"  content="php">
+    <meta name="description" content="Vue深度监听">
+    <meta name="keywords"  content="Vue">
     <!-- Open Graph -->
-    <meta property="og:title" content="个人对于单例模式中类只能被实例化1次的理解 - 孙佳磊的博客">
+    <meta property="og:title" content="Vue深度监听 - 孙佳磊的博客">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="http://localhost:4000/2018/06/20/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F.html">
+    <meta property="og:url" content="http://localhost:4000/2019/09/27/vue%E6%B7%B1%E5%BA%A6%E7%9B%91%E5%90%AC.html">
     <meta property="og:description" content="一位PHP开发对技术的一点分享。">
     <meta property="og:site_name" content="孙佳磊的博客">
     <link rel="stylesheet" href="//cdn.staticfile.org/normalize/6.0.0/normalize.min.css">
@@ -49,14 +49,14 @@
         <div class="post-tags">
             
             
-            <a href="http://localhost:4000/tags.html#php" class="post-tag">php</a>
+            <a href="http://localhost:4000/tags.html#Vue" class="post-tag">Vue</a>
             
             
         </div>
-        <h1>个人对于单例模式中类只能被实例化1次的理解</h1>
+        <h1>Vue深度监听</h1>
         <div class="post-meta">
             <span class="post-meta-item"><i class="iconfont icon-author"></i><a href="http://localhost:4000" target="_blank" rel="author">sunjialei</a></></span>
-            <time class="post-meta-item" datetime="2018-06-20"><i class="iconfont icon-date"></i>2018-06-20</time>
+            <time class="post-meta-item" datetime="2019-09-27"><i class="iconfont icon-date"></i>2019-09-27</time>
         </div>
     </div>
     
@@ -65,12 +65,19 @@
 <div class="post-content">
     
     <article class="markdown-body">
-        <div class="post-forward-message">本文章地址：http://localhost:4000/2018/06/20/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F.html 转载请注明出处</div>
-        <p>今天回过去看单例模式的时候突然想到一个问题：</p>
-<h5 id="php中有垃圾回收机制会把对象销毁而单例模式的好处是类只能被实例化1次当以后再调用的时候对象已经被创建了无需再次创建对象">php中有垃圾回收机制,会把对象销毁。而单例模式的好处是类只能被实例化1次,当以后再调用的时候对象已经被创建了,无需再次创建对象。</h5>
-<p>那么就有个问题，这是不是代表着单例模式的对象不会被垃圾回收机制回收销毁? 带着这个疑问,我在网上查阅了相关资料,并经过自己的理解,得出以下结论：</p>
-<h5 id="php中的垃圾回收机制是会把长时间不用的对象给回收销毁的单例模式中的对象也不例外但不是说过单例模式的优点是类只需实例化1次吗">php中的垃圾回收机制是会把长时间不用的对象给回收销毁的，单例模式中的对象也不例外,但不是说过单例模式的优点是类只需实例化1次吗？</h5>
-<h5 id="是这样的单例模式并不是它的对象永远就只有一个而是在该类已经创建一个对象的情况下不允许再创建另一个对象当对象长时间不使用就会被回收要再次使用的时候还需要实例化">是这样的,单例模式并不是它的对象永远就只有一个,而是在该类已经创建一个对象的情况下,不允许再创建另一个对象。当对象长时间不使用,就会被回收,要再次使用的时候还需要实例化</h5>
+        <div class="post-forward-message">本文章地址：http://localhost:4000/2019/09/27/vue%E6%B7%B1%E5%BA%A6%E7%9B%91%E5%90%AC.html 转载请注明出处</div>
+        <p>遇到个需求: 所有的input输入框中都有值时,按钮才可点击,否则置灰。
+所有的input框中的值都在form对象中,这时候需要深度监听才能监听到对象中的值的变化</p>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">watch</span><span class="o">:</span> <span class="p">{</span>
+    <span class="py">form</span><span class="p">:</span> <span class="err">{</span>
+      <span class="n">handler</span><span class="p">(</span><span class="n">form</span><span class="p">)</span><span class="err">{</span>
+        <span class="p">.....</span>
+      <span class="p">}</span><span class="o">,</span>
+      <span class="nt">deep</span><span class="nd">:true</span>
+    <span class="err">}</span><span class="o">,</span>
+<span class="err">}</span>
+</code></pre></div></div>
 
     </article>
     
@@ -103,21 +110,12 @@
     </section>
     <section class="post-footer-item read-next">
         
-        <div class="read-next-item">
-            <a href="/2018/06/24/%E5%BC%80%E5%90%AFmysql-remote-access.html" class="read-next-link"></a>
-            <section>
-                <span>允许远程访问mysql,开启remote access</span>
-                <p>比如在多人开发的情况下,需要使用同一台服务器的数据库,每个开发人员本地使用如Navicat这类的mysql管理工具...</p>
-            </section>
-            
-        </div>
-        
         
         <div class="read-next-item">
-            <a href="/2018/06/20/openssh.html" class="read-next-link"></a>
+            <a href="/2019/03/08/js-deep-shallow-copy.html" class="read-next-link"></a>
             <section>
-                <span>SSH远程连接VirtualBox虚拟机Ubuntu</span>
-                <p>ssh远程连接虚拟机的Ubuntu步骤如下：</p>
+                <span>JS深拷贝与浅拷贝</span>
+                <p>JS中数据类型有两大类：</p>
             </section>
             
         </div>

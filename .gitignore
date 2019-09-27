@@ -3,4 +3,6 @@
 .idea
 
 node_modules
+.jekyll-cache
+.vscode
 
