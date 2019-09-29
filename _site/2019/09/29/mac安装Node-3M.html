@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAC下安装Node 3M - 孙佳磊的博客</title>
+    <meta name="author"  content="孙佳磊">
+    <meta name="description" content="MAC下安装Node 3M">
+    <meta name="keywords"  content="node">
+    <!-- Open Graph -->
+    <meta property="og:title" content="MAC下安装Node 3M - 孙佳磊的博客">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="http://localhost:4000/2019/09/29/mac%E5%AE%89%E8%A3%85Node-3M.html">
+    <meta property="og:description" content="一位PHP开发对技术的一点分享。">
+    <meta property="og:site_name" content="孙佳磊的博客">
+    <link rel="stylesheet" href="//cdn.staticfile.org/normalize/6.0.0/normalize.min.css">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_roc50gemkxpw4s4i.css">
+    <link rel="stylesheet" href="/assets/css/github-markdown.css">
+    <link rel="stylesheet" href="/assets/css/prism.css">
+    <link rel="stylesheet" href="/assets/css/share.min.css">
+    <link rel="stylesheet" href="/assets/css/app.min.css">
+    <link rel="stylesheet" href="/assets/css/common.css">
+</head>
+<body>
+    <!--[if lt IE 10]>
+<div class="alert-danger" role="alert">你的浏览器实在太太太旧了，放学别走，升级完浏览器再说！<a target="_blank" class="alert-link" href="http://browsehappy.com">立即升级</a></div>
+<![endif]-->
+<input id="nm-switch" type="hidden" value="false">
+
+<header class="g-header">
+    <div class="g-logo">
+      <a href="/"></a>
+    </div>
+    <i id="menu-toggle" class="iconfont icon-menu"></i>
+    <nav class="g-nav">
+        <ul>
+            
+            <li><a href="/">Home</a></li>
+            
+            <li><a href="/tags.html">Tags</a></li>
+            
+        </ul>
+    </nav>
+</header>
+
+
+<header class="g-banner post-header post-pattern-circuitBoard bgcolor-default post-no-cover" data-theme="default">
+    <div class="post-wrapper">
+        <div class="post-tags">
+            
+            
+            <a href="http://localhost:4000/tags.html#node" class="post-tag">node</a>
+            
+            
+        </div>
+        <h1>MAC下安装Node 3M</h1>
+        <div class="post-meta">
+            <span class="post-meta-item"><i class="iconfont icon-author"></i><a href="http://localhost:4000" target="_blank" rel="author">sunjialei</a></></span>
+            <time class="post-meta-item" datetime="2019-09-29"><i class="iconfont icon-date"></i>2019-09-29</time>
+        </div>
+    </div>
+    
+</header>
+
+<div class="post-content">
+    
+    <article class="markdown-body">
+        <div class="post-forward-message">本文章地址：http://localhost:4000/2019/09/29/mac%E5%AE%89%E8%A3%85Node-3M.html 转载请注明出处</div>
+        <p>3M的好处:可以任意切换node版本和镜像源</p>
+
+<p>安装nvm</p>
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">curl</span> <span class="nt">-o-</span> <span class="nt">https</span><span class="o">://</span><span class="nt">raw</span><span class="nc">.githubusercontent.com</span><span class="o">/</span><span class="nt">nvm-sh</span><span class="o">/</span><span class="nt">nvm</span><span class="o">/</span><span class="nt">v0</span><span class="nc">.34.0</span><span class="o">/</span><span class="nt">install</span><span class="nc">.sh</span> <span class="o">|</span> <span class="nt">bash</span>
+</code></pre></div></div>
+
+<p>拷贝下面的环境变量,放在 ~/.bash_profile文件中</p>
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">export</span> <span class="nt">NVM_DIR</span><span class="o">=</span><span class="s1">"${XDG_CONFIG_HOME/:-$HOME/.}nvm"</span>
+<span class="o">[</span> <span class="nt">-s</span> <span class="s1">"$NVM_DIR/nvm.sh"</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="err">\</span><span class="o">.</span> <span class="s1">"$NVM_DIR/nvm.sh"</span>
+</code></pre></div></div>
+
+<p>使环境变量生效</p>
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">source</span> <span class="o">~/</span><span class="nc">.bash_profile</span>
+</code></pre></div></div>
+
+<p>查看nvm版本</p>
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">nvm</span> <span class="nt">--version</span>
+</code></pre></div></div>
+
+<p>查看可安装的node版本</p>
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">nvm</span> <span class="nt">ls-remote</span>
+</code></pre></div></div>
+
+<p>这里选择安装LTS稳定版本</p>
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">nvm</span> <span class="nt">install</span> <span class="nt">10</span><span class="nc">.16.3</span>
+</code></pre></div></div>
+
+<p>查看node版本</p>
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">node</span> <span class="nt">-v</span>
+</code></pre></div></div>
+
+<p>切换node版本</p>
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">nvm</span> <span class="nt">use</span> <span class="nt">12</span><span class="nc">.11.0</span>
+</code></pre></div></div>
+
+<p>查看本机安装了哪些node版本</p>
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">nvm</span> <span class="nt">ls</span>
+</code></pre></div></div>
+
+<p>安装nrm</p>
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">sudo</span> <span class="nt">npm</span> <span class="nt">install</span> <span class="nt">nrm</span> <span class="nt">--global</span>
+</code></pre></div></div>
+
+<p>查看npm源</p>
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">nrm</span> <span class="nt">ls</span>
+</code></pre></div></div>
+
+<p>测试源的速度</p>
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">nrm</span> <span class="nt">test</span>
+</code></pre></div></div>
+
+<p>切换源</p>
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">nrm</span> <span class="nt">use</span> <span class="nt">taobao</span>
+</code></pre></div></div>
+
+    </article>
+    
+    <div class="social-share-wrapper">
+        <div class="social-share"></div>
+    </div>
+    
+</div>
+
+<section class="author-detail">
+    <section class="post-footer-item author-card">
+        <div class="avatar">
+            <img src="/assets/img/profile.jpg" alt="">
+        </div>
+        <div class="author-name" rel="author">孙佳磊</div>
+        <div class="bio">
+            <p>WEB开发者,热爱技术</p>
+        </div>
+        
+        <ul class="sns-links">
+            
+            <li>
+                <a href="//github.com/cainiaosunjialei" target="_blank">
+                    <i class="iconfont icon-github"></i>
+                </a>
+            </li>
+            
+        </ul>
+        
+    </section>
+    <section class="post-footer-item read-next">
+        
+        
+        <div class="read-next-item">
+            <a href="/2019/09/27/vue%E6%B7%B1%E5%BA%A6%E7%9B%91%E5%90%AC.html" class="read-next-link"></a>
+            <section>
+                <span>Vue深度监听</span>
+                <p>遇到个需求: 所有的input输入框中都有值时,按钮才可点击,否则置灰。所有的input框中的值都在form对象中...</p>
+            </section>
+            
+        </div>
+        
+    </section>
+    
+</section>
+
+<footer class="g-footer">
+    <section>孙佳磊的博客 © 2019</section>
+    <section>Powered by <a href="//jekyllrb.com">Jekyll</a> | <a href="https://github.com/kaeyleo/jekyll-theme-H2O">Theme H2O</a></section>
+</footer>
+
+<script src="/assets/js/social-share.min.js"></script>
+<script>
+    socialShare('.social-share', {
+        sites: ['wechat','weibo','douban','twitter'],
+        wechatQrcodeTitle: "分享到微信朋友圈",
+        wechatQrcodeHelper: '<p>扫码后点击右上角</p><p>将本文分享至朋友圈</p>'
+    });
+</script>
+<script>
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+//var d = document, s = d.createElement('script');
+/*写入自己的disqus信息*/
+//s.src = 'https://liaokeyu.disqus.com/embed.js';
+//s.setAttribute('data-timestamp', +new Date());
+//(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/js/prism.js"></script>
+<script src="/assets/js/index.min.js"></script>
+</body>
+</html>
