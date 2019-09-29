@@ -66,9 +66,113 @@
     
     <article class="markdown-body">
         <div class="post-forward-message">本文章地址：http://localhost:4000/2019/09/29/css%E7%9B%92%E6%A8%A1%E5%9E%8B.html 转载请注明出处</div>
-        <p>盒子模型的2个结论:
-1.为设定宽度的元素添加边框、内边距、外边距会导致盒子扩展的更宽。实际上盒子的width属性设定的只是盒子内容区的宽度，而非盒子要占据的水平宽度。
-2.没有设定宽度的元素在水平方向上宽度适应其父元素,其内容宽度会随着内边距、边框、外边距的增减而减少。</p>
+        <p>盒子模型的2个结论:</p>
+
+<p>1.为设定宽度的元素添加边框、内边距、外边距会导致盒子扩展的更宽。实际上盒子的width属性设定的只是盒子内容区的宽度，而非盒子要占据的水平宽度。</p>
+
+<p>2.没有设定宽度的元素在水平方向上宽度适应其父元素,其内容宽度会随着内边距、边框、外边距的增减而减少。</p>
+
+<h3 id="第1个结论">第1个结论:</h3>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;style&gt;</span>
+      <span class="nc">.div1</span> <span class="p">{</span>
+        <span class="nl">width</span><span class="p">:</span> <span class="m">150px</span><span class="p">;</span>
+        <span class="nl">height</span><span class="p">:</span> <span class="m">100px</span><span class="p">;</span>
+        <span class="nl">border</span><span class="p">:</span> <span class="m">1px</span> <span class="nb">solid</span> <span class="n">grey</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="nt">&lt;/style&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"div1"</span><span class="nt">&gt;</span>
+      这里是内容这里是内容
+    <span class="nt">&lt;/div&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+<p><img class="header-img" src="/assets/img/2019-09-29-01.jpg" alt="" />
+盒子的宽度=150px(内容宽度)+2px(border-left、border-right的宽度)</p>
+
+<p>加padding试试看</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;style&gt;</span>
+      <span class="nc">.div1</span> <span class="p">{</span>
+        <span class="nl">width</span><span class="p">:</span> <span class="m">150px</span><span class="p">;</span>
+        <span class="nl">height</span><span class="p">:</span> <span class="m">100px</span><span class="p">;</span>
+        <span class="nl">border</span><span class="p">:</span> <span class="m">1px</span> <span class="nb">solid</span> <span class="n">grey</span><span class="p">;</span>
+        <span class="nl">padding</span><span class="p">:</span> <span class="m">10px</span>
+      <span class="p">}</span>
+    <span class="nt">&lt;/style&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"div1"</span><span class="nt">&gt;</span>
+      这里是内容这里是内容
+    <span class="nt">&lt;/div&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+<p><img class="header-img" src="/assets/img/2019-09-29-02.jpg" alt="" />
+盒子的宽度=150px(内容宽度)+20px(padding-left、padding-right的宽度)+2px(border-left、border-right的宽度)</p>
+
+<h4 id="可以验证结论1的说法为设定宽度的元素添加边框内边距外边距会导致盒子扩展的更宽">可以验证结论1的说法，为设定宽度的元素添加边框、内边距、外边距会导致盒子扩展的更宽</h4>
+
+<h3 id="第2个结论">第2个结论:</h3>
+<p>div1中加个div2,对div2不设置宽度</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;style&gt;</span>
+      <span class="nc">.div1</span> <span class="p">{</span>
+        <span class="nl">width</span><span class="p">:</span> <span class="m">150px</span><span class="p">;</span>
+        <span class="nl">height</span><span class="p">:</span> <span class="m">100px</span><span class="p">;</span>
+        <span class="nl">border</span><span class="p">:</span> <span class="m">1px</span> <span class="nb">solid</span> <span class="n">grey</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="nc">.div2</span> <span class="p">{</span>
+          <span class="nl">padding</span><span class="p">:</span> <span class="m">10px</span>
+      <span class="p">}</span>
+    <span class="nt">&lt;/style&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"div1"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"div2"</span><span class="nt">&gt;</span>
+            这里是内容这里是内容
+        <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+<p><img class="header-img" src="/assets/img/2019-09-29-03.jpg" alt="" />
+div2盒子对宽度变为了150px,内容的宽度进行了相应的缩小。</p>
+
+<h4 id="css3对box-sizing属性在不需要div2的情况下可以实现相同效果box-sizing属性有2个值1content-box-2border-box">CSS3对box-sizing属性在不需要div2的情况下可以实现相同效果，box-sizing属性有2个值,1.content-box 2.border-box</h4>
+
+<p>默认值为content-box。border-box的情况下:</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;style&gt;</span>
+      <span class="nc">.div1</span> <span class="p">{</span>
+        <span class="nl">box-sizing</span><span class="p">:</span> <span class="n">border-box</span><span class="p">;</span>
+        <span class="nl">width</span><span class="p">:</span> <span class="m">150px</span><span class="p">;</span>
+        <span class="nl">height</span><span class="p">:</span> <span class="m">100px</span><span class="p">;</span>
+        <span class="nl">border</span><span class="p">:</span> <span class="m">1px</span> <span class="nb">solid</span> <span class="n">grey</span><span class="p">;</span>
+        <span class="nl">padding</span><span class="p">:</span> <span class="m">10px</span>
+      <span class="p">}</span>
+      
+    <span class="nt">&lt;/style&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"div1"</span><span class="nt">&gt;</span>
+        这里是内容这里是内容
+    <span class="nt">&lt;/div&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+<p><img class="header-img" src="/assets/img/2019-09-29-04.jpg" alt="" />
+盒子的宽度为150px.元素内容进行了相应的缩小</p>
 
     </article>
     
