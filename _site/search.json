@@ -7,6 +7,12 @@
     } ,
   
     {
+      "title"    : "CSS盒子模型结论",
+      "tags"     : "CSS",
+      "url"      : "/2019/09/29/css%E7%9B%92%E6%A8%A1%E5%9E%8B.html"
+    } ,
+  
+    {
       "title"    : "Vue深度监听",
       "tags"     : "Vue",
       "url"      : "/2019/09/27/vue%E6%B7%B1%E5%BA%A6%E7%9B%91%E5%90%AC.html"
@@ -76,12 +82,6 @@
       "title"    : "SSH远程连接VirtualBox虚拟机Ubuntu",
       "tags"     : "php",
       "url"      : "/2018/06/20/openssh.html"
-    } ,
-  
-    {
-      "title"    : "Windows下Phalcon的安装以及phpstorm识别phalcon语法及提示",
-      "tags"     : "php phalcon",
-      "url"      : "/2018/05/06/phalcon.html"
     } ,
   
     {

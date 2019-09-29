@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SSH远程连接VirtualBox虚拟机Ubuntu - 孙佳磊的博客</title>
+    <title>CSS盒子模型结论 - 孙佳磊的博客</title>
     <meta name="author"  content="孙佳磊">
-    <meta name="description" content="SSH远程连接VirtualBox虚拟机Ubuntu">
-    <meta name="keywords"  content="php">
+    <meta name="description" content="CSS盒子模型结论">
+    <meta name="keywords"  content="CSS">
     <!-- Open Graph -->
-    <meta property="og:title" content="SSH远程连接VirtualBox虚拟机Ubuntu - 孙佳磊的博客">
+    <meta property="og:title" content="CSS盒子模型结论 - 孙佳磊的博客">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="http://localhost:4000/2018/06/20/openssh.html">
+    <meta property="og:url" content="http://localhost:4000/2019/09/29/css%E7%9B%92%E6%A8%A1%E5%9E%8B.html">
     <meta property="og:description" content="一位PHP开发对技术的一点分享。">
     <meta property="og:site_name" content="孙佳磊的博客">
     <link rel="stylesheet" href="//cdn.staticfile.org/normalize/6.0.0/normalize.min.css">
@@ -49,14 +49,14 @@
         <div class="post-tags">
             
             
-            <a href="http://localhost:4000/tags.html#php" class="post-tag">php</a>
+            <a href="http://localhost:4000/tags.html#CSS" class="post-tag">CSS</a>
             
             
         </div>
-        <h1>SSH远程连接VirtualBox虚拟机Ubuntu</h1>
+        <h1>CSS盒子模型结论</h1>
         <div class="post-meta">
             <span class="post-meta-item"><i class="iconfont icon-author"></i><a href="http://localhost:4000" target="_blank" rel="author">sunjialei</a></></span>
-            <time class="post-meta-item" datetime="2018-06-20"><i class="iconfont icon-date"></i>2018-06-20</time>
+            <time class="post-meta-item" datetime="2019-09-29"><i class="iconfont icon-date"></i>2019-09-29</time>
         </div>
     </div>
     
@@ -65,37 +65,10 @@
 <div class="post-content">
     
     <article class="markdown-body">
-        <div class="post-forward-message">本文章地址：http://localhost:4000/2018/06/20/openssh.html 转载请注明出处</div>
-        <p>ssh远程连接虚拟机的Ubuntu步骤如下：</p>
-
-<p>1.在设置中把虚拟机的网络连接方式改为桥接网卡</p>
-
-<p>2.在Ubuntu下查看是否安装ssh服务, 命令：</p>
-<pre><code class="language-linux">ps -e | grep ssh
-</code></pre>
-
-<p>3.如果有安装ssh应该有下面这种提示,否则就是没安装</p>
-<pre><code class="language-linux"> 2974 ?        00:00:00 sshd
- 3042 ?        00:00:00 sshd
- 3086 ?        00:00:00 sshd
-</code></pre>
-
-<p>4.如果没安装,执行命令：</p>
-<pre><code class="language-linux">sudo apt-get install openssh-server
-</code></pre>
-
-<p>5.查看虚拟机ip,执行命令：</p>
-<pre><code class="language-linux">ifconfig
-</code></pre>
-<p>inet address即为虚拟机ip地址,ssh输入的host就是这个地址</p>
-
-<p>6.如果ssh还是连不上Ubuntu,可以让防火墙开放22端口</p>
-<pre><code class="language-linux">sudo ufw allow 22
-</code></pre>
-<p>或者直接关闭防火墙</p>
-<pre><code class="language-linux">sudo ufw disable
-</code></pre>
-
+        <div class="post-forward-message">本文章地址：http://localhost:4000/2019/09/29/css%E7%9B%92%E6%A8%A1%E5%9E%8B.html 转载请注明出处</div>
+        <p>盒子模型的2个结论:
+1.为设定宽度的元素添加边框、内边距、外边距会导致盒子扩展的更宽。实际上盒子的width属性设定的只是盒子内容区的宽度，而非盒子要占据的水平宽度。
+2.没有设定宽度的元素在水平方向上宽度适应其父元素,其内容宽度会随着内边距、边框、外边距的增减而减少。</p>
 
     </article>
     
@@ -129,20 +102,20 @@
     <section class="post-footer-item read-next">
         
         <div class="read-next-item">
-            <a href="/2018/06/20/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F.html" class="read-next-link"></a>
+            <a href="/2019/09/29/mac%E5%AE%89%E8%A3%85Node-3M.html" class="read-next-link"></a>
             <section>
-                <span>个人对于单例模式中类只能被实例化1次的理解</span>
-                <p>今天回过去看单例模式的时候突然想到一个问题：php中有垃圾回收机制,会把对象销毁。而单例模式的好处是类只能被实例化...</p>
+                <span>MAC下安装Node 3M</span>
+                <p>3M的好处:可以任意切换node版本和镜像源</p>
             </section>
             
         </div>
         
         
         <div class="read-next-item">
-            <a href="/2018/02/12/php-spl_autoload_register.html" class="read-next-link"></a>
+            <a href="/2019/09/27/vue%E6%B7%B1%E5%BA%A6%E7%9B%91%E5%90%AC.html" class="read-next-link"></a>
             <section>
-                <span>关于php的命名空间非限定、限定、完全限定的理解与自动加载之spl_autoload_register()</span>
-                <p>做项目这么久以来一直没有好好的静下心来对自身思考有哪些不足之处,有些东西虽然用了，但没去考虑过为什么是这样的，现在...</p>
+                <span>Vue深度监听</span>
+                <p>遇到个需求: 所有的input输入框中都有值时,按钮才可点击,否则置灰。所有的input框中的值都在form对象中...</p>
             </section>
             
         </div>
