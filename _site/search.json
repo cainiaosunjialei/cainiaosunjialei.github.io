@@ -1,6 +1,18 @@
 [
   
     {
+      "title"    : "Ubuntu18.04安装Mongodb",
+      "tags"     : "ubuntu",
+      "url"      : "/2019/10/15/ubuntu%E5%AE%89%E8%A3%85mongodb.html"
+    } ,
+  
+    {
+      "title"    : "CSS子div的margin-top属性不生效的解决办法",
+      "tags"     : "CSS",
+      "url"      : "/2019/10/15/css-margin-top%E4%B8%8D%E7%94%9F%E6%95%88.html"
+    } ,
+  
+    {
       "title"    : "MAC下安装Node 3M",
       "tags"     : "node",
       "url"      : "/2019/09/29/mac%E5%AE%89%E8%A3%85Node-3M.html"
